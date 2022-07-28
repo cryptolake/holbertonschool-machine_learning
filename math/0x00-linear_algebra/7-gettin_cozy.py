@@ -15,12 +15,9 @@ def cat_matrices2D(mat1, mat2, axis=0):
             mat.append(line)
         return mat
     elif axis == 1:
-        try:
-            for i, col in enumerate(mat2):
-                for ele in col:
-                    mat[i].append(ele)
-            return mat
-        except Exception:
-            return None
+        for i, col in enumerate(mat2):
+            for ele in col:
+                mat[i].append(ele)
+        return mat
     else:
         return None
