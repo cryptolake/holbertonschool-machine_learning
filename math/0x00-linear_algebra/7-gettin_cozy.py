@@ -9,6 +9,8 @@ def deep_copy(A):
 
 def cat_matrices2D(mat1, mat2, axis=0):
     """Cat matrices."""
+    if mat1 is None or mat2 is None:
+        return None
     mat = deep_copy(mat1)
     if axis == 0:
         for line in mat2:
