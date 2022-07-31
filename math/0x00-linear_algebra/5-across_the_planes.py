@@ -10,11 +10,18 @@ def shape(ele, shp):
     return shape(ele[0], shp)
 
 
+def matrix_shape(matrix):
+    """Caller for the recur func."""
+    if len(matrix) == 0:
+        return [0]
+    return shape(matrix, [])
+
+
 def add_matrices2D(mat1, mat2):
     """Matrix addition."""
-    if len(mat1) == 0 or len(mat2) == 0:
+    if len(mat1) == 0 and len(mat2) == 0:
         return None
-    if shape(mat1, []) != shape(mat2, []):
+    if matrix_shape(mat1) != matrix_shape(mat2):
         return None
     mat = []
     for i in range(len(mat1)):
