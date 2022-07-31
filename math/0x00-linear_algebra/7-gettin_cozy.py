@@ -2,21 +2,6 @@
 """Cat matrices."""
 
 
-def shape(ele, shp):
-    """Recursive function to get shape."""
-    if not isinstance(ele, list):
-        return shp
-    shp.append(len(ele))
-    return shape(ele[0], shp)
-
-
-def matrix_shape(matrix):
-    """Caller for the recur func."""
-    if len(matrix) == 0:
-        return [0]
-    return shape(matrix, [])
-
-
 def deep_copy(A):
     """Deep copy."""
     return [r.copy() for r in A]
@@ -27,9 +12,6 @@ def cat_matrices2D(mat1, mat2, axis=0):
     if mat1 is None or mat2 is None:
         return None
     mat = deep_copy(mat1)
-    shap1, shap2 = matrix_shape(mat1), matrix_shape(mat2)
-    if shap1 != shap2:
-        return None
     if axis == 0:
         for line in mat2:
             mat.append(line)
