@@ -12,7 +12,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
     if mat1 is None or mat2 is None:
         return None
     if mat1 == [] and mat2 == []:
-        return None
+        return []
     mat = deep_copy(mat1)
     if axis == 0:
         for line in mat2:
