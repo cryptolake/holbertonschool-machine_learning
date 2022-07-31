@@ -16,6 +16,8 @@ def cat_matrices2D(mat1, mat2, axis=0):
     mat = deep_copy(mat1)
     if axis == 0:
         for line in mat2:
+            if line == []:
+                return None
             mat.append(line)
         return mat
     elif axis == 1:
