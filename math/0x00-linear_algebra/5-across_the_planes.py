@@ -2,17 +2,11 @@
 """Matrix addition."""
 
 
-def shape(ele, shp):
-    """Recursive function to get shape."""
-    if not isinstance(ele, list):
-        return shp
-    shp.append(len(ele))
-    return shape(ele[0], shp)
-
-
 def add_matrices2D(mat1, mat2):
     """Matrix addition."""
-    if shape(mat1, []) != shape(mat2, []):
+    if len(mat1) != len(mat2):
+        return None
+    if len(mat1[0]) != len(mat2[0]):
         return None
     mat = []
     for i in range(len(mat1)):
