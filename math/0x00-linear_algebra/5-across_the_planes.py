@@ -20,7 +20,7 @@ def matrix_shape(matrix):
 def add_matrices2D(mat1, mat2):
     """Matrix addition."""
     if len(mat1) == 0 and len(mat2) == 0:
-        return None
+        return []
     if matrix_shape(mat1) != matrix_shape(mat2):
         return None
     mat = []
