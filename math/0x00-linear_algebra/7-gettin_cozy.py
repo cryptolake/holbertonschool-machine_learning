@@ -12,6 +12,8 @@ def shape(ele, shp):
 
 def matrix_shape(matrix):
     """Caller for the recur func."""
+    if len(matrix) == 0:
+        return [0]
     return shape(matrix, [])
 
 
@@ -26,9 +28,9 @@ def cat_matrices2D(mat1, mat2, axis=0):
         return None
     mat = deep_copy(mat1)
     shap1, shap2 = matrix_shape(mat1), matrix_shape(mat2)
+    if shap1 != shap2:
+        return None
     if axis == 0:
-        if shap1[1] != shap2[1]:
-            return None
         for line in mat2:
             mat.append(line)
         return mat
