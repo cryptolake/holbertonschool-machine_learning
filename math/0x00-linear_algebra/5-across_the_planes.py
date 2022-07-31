@@ -12,7 +12,7 @@ def shape(ele, shp):
 
 def add_matrices2D(mat1, mat2):
     """Matrix addition."""
-    if mat1 == [] or mat2 == []:
+    if len(mat1) == 0 or len(mat2) == 0:
         return None
     if shape(mat1, []) != shape(mat2, []):
         return None
