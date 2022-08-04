@@ -2,7 +2,7 @@
 """sum is the best."""
 
 
-def summation_i_squared(n):
+def summation_i_squared(n, i=0):
     """
     Variable n is the stopping condition.
 
@@ -10,7 +10,7 @@ def summation_i_squared(n):
     If n is not a valid number, return None
     You are not allowed to use any loops
     """
-    sum = 0
-    for i in range(1, n+1):
-        sum += i * i
-    return sum
+    if n == 0:
+        return 0
+    i += 1
+    return i*i + summation_i_squared(n-1, i)
