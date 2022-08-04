@@ -2,7 +2,15 @@
 """sum is the best."""
 
 
-def summation_i_squared(n, i=0):
+def recur_sum(n, i):
+    """Recursive func."""
+    if n == 0:
+        return 0
+    i += 1
+    return i*i + recur_sum(n-1, i)
+
+
+def summation_i_squared(n):
     """
     Variable n is the stopping condition.
 
@@ -10,7 +18,6 @@ def summation_i_squared(n, i=0):
     If n is not a valid number, return None
     You are not allowed to use any loops
     """
-    if n == 0:
-        return 0
-    i += 1
-    return i*i + summation_i_squared(n-1, i)
+    if n < 1:
+        return None
+    return recur_sum(n, 0)
