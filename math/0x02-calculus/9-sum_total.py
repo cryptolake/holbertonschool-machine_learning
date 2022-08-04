@@ -20,4 +20,5 @@ def summation_i_squared(n):
     """
     if n < 1 or type(n) is not int:
         return None
-    return int(recur_sum(n, 0))
+    n = int(n)
+    return recur_sum(n, 0)
