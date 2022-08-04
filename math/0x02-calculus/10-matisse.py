@@ -23,6 +23,6 @@ def poly_derivative(poly):
         if i > 1 and x != 0:
             derv[i] *= i
     derv.pop(0)
-    if sum(derv) == 0:
+    if sum(derv) == 0 or len(derv) == 0:
         return 0
     return derv
