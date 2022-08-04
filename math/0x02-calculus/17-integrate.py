@@ -4,7 +4,7 @@
 
 def poly_integral(poly, C=0):
     """Polynomial Integration."""
-    poly.insrt(0, C)
+    poly.insert(0, C)
     integ = []
     for i, x in enumerate(poly):
         integ.append(x)
