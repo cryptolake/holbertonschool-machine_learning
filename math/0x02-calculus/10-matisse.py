@@ -19,7 +19,7 @@ def poly_derivative(poly):
         return None
     derv = []
     for i, x in enumerate(poly):
-        if type(x) is not float or type(x) is not int:
+        if type(x) is not float and type(x) is not int:
             return None
         derv.append(x)
         if i > 1 and x != 0:
