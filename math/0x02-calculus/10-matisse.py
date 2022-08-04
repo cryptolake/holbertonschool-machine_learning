@@ -15,10 +15,12 @@ def poly_derivative(poly):
     Return a new list of coefficients
     representing the derivative of the polynomial
     """
-    if len(poly) == 0:
+    if len(poly) == 0 or type(poly) is not list:
         return None
     derv = []
     for i, x in enumerate(poly):
+        if type(x) is not float or type(x) is not int:
+            return None
         derv.append(x)
         if i > 1 and x != 0:
             derv[i] *= i

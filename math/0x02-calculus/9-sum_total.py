@@ -18,7 +18,6 @@ def summation_i_squared(n):
     If n is not a valid number, return None
     You are not allowed to use any loops
     """
-    if n < 1 or type(n) is not int:
+    if n < 1 or type(n) is not int or type(n) is not float:
         return None
-    n = int(n)
     return recur_sum(n, 0)
