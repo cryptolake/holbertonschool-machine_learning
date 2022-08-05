@@ -4,7 +4,7 @@
 
 def poly_integral(poly, C=0):
     """Polynomial Integration."""
-    if type(poly) is not list:
+    if type(poly) is not list or type(C) is not int:
         return None
     poly.insert(0, C)
     integ = []
