@@ -9,6 +9,8 @@ in which events occur continuously and
 independently at a constant average rate.
 """
 
+E = 2.7182818285
+
 
 class Exponential:
     """Class of Exponential."""
@@ -25,3 +27,10 @@ class Exponential:
             elif len(data) < 2:
                 raise ValueError('data must contain multiple values')
             self.lambtha = float(sum(data) / len(data)) ** -1
+
+    def pdf(self, x):
+        """Probability density function."""
+        if x < 0:
+            return 0
+        pdf = self.lambtha * (E ** -(self.lambtha * x))
+        return pdf
