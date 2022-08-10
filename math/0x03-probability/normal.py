@@ -47,5 +47,6 @@ class Normal:
 
     def pdf(self, x):
         """Probability density function."""
-        return 1/((self.stddev*(2*PI)**(1/2)) **
-                  -1/2*((x-self.mean)/self.stddev))
+        epower = E ** (-1/2*(((x-self.mean)/self.stddev)**2))
+        denom = 1/(self.stddev * ((2*PI) ** (1/2)))
+        return denom * epower
