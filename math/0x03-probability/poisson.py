@@ -40,6 +40,6 @@ class Poisson:
         if type(k) is not int:
             k = int(k)
         if k < 0:
-            k = 0
+            return 0
         pmf = (pow(self.lambtha, k) * pow(E, -self.lambtha)) / fact(k)
         return pmf
