@@ -34,3 +34,10 @@ class Exponential:
             return 0
         pdf = self.lambtha * (E ** -(self.lambtha * x))
         return pdf
+
+    def cdf(self, x):
+        """Cumulative distribution function."""
+        if x < 0:
+            return 0
+        cdf = 1 - E ** -(self.lambtha * x)
+        return cdf
