@@ -12,11 +12,6 @@ and independently of the time since the last event.
 E = 2.7182818285
 
 
-def mean(data):
-    """mean."""
-    return sum(data) / len(data)
-
-
 class Poisson:
     """Class of Poisson."""
 
@@ -29,6 +24,6 @@ class Poisson:
         else:
             if type(data) is not list:
                 TypeError('data must be a list')
-            if len(data) < 2:
+            elif len(data) < 2:
                 ValueError('data must contain multiple values')
-            self.lambtha = float(mean(data))
+            self.lambtha = float(sum(data) / len(data))
