@@ -23,8 +23,7 @@ class Poisson:
     def __init__(self, data=None, lambtha=1):
         """Initialize."""
         if data is None:
-            if (type(lambtha) is not int and type(lambtha) is not float)\
-               or lambtha <= 0:
+            if float(lambtha) <= 0:
                 raise ValueError('lambtha must be a positive value')
             self.lambtha = float(lambtha)
         else:
