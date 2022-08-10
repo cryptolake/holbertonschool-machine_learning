@@ -32,4 +32,4 @@ class Poisson:
                 TypeError('data must be a list')
             if len(data) < 2:
                 ValueError('data must contain multiple values')
-            self.lambtha = mean(data)
+            self.lambtha = float(mean(data))
