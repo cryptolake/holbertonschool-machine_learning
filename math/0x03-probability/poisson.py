@@ -12,6 +12,13 @@ and independently of the time since the last event.
 E = 2.7182818285
 
 
+def fact(n):
+    """Factorial."""
+    if n == 1:
+        return 1
+    return n * fact(n - 1)
+
+
 class Poisson:
     """Class of Poisson."""
 
@@ -27,3 +34,12 @@ class Poisson:
             elif len(data) < 2:
                 raise ValueError('data must contain multiple values')
             self.lambtha = float(sum(data) / len(data))
+
+    def pmf(self, k):
+        """Probability mass function."""
+        if type(k) is not int:
+            k = int(k)
+        if k < 0:
+            k = 0
+        pmf = (pow(self.lambtha, k) * pow(E, -self.lambtha)) / fact(k)
+        return pmf
