@@ -52,5 +52,5 @@ class Poisson:
             return 0
         cdf = E ** -self.lambtha *\
             sum([self.lambtha ** x / fact(x)
-                 for x in range(0, round(k) - 1)])
+                 for x in range(0, round(k) + 1)])
         return cdf
