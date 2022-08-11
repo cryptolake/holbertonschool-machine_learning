@@ -56,4 +56,7 @@ class Binomial:
 
     def pmf(self, k):
         """Do pmf."""
+        if k < 0:
+            return 0
+        k = int(k)
         return bicoe(self.n, k) * (self.p**k) * ((1-self.p) ** (self.n-k))
