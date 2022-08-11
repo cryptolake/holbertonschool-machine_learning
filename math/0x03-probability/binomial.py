@@ -9,12 +9,6 @@ Binomial distribution.
 """
 
 
-def round(x):
-    """Get round."""
-    n = {int(x+1): int(x+1)-x, int(x): x - int(x)}
-    return min(n, key=n.get)
-
-
 def mean(data):
     """Get mean."""
     return sum(data) / len(data)
@@ -44,5 +38,6 @@ class Binomial:
                 raise TypeError('data must be a list')
             elif len(data) < 2:
                 raise ValueError('data must contain multiple values')
-            self.p = abs((variance(data) / mean(data)) - 1)
-            self.n = round(mean(data) / self.p)
+            p_value = 1-(variance(data) / mean(data))
+            self.n = round(mean(data) / p_value)
+            self.p = mean(data) / self.n
