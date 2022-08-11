@@ -60,3 +60,10 @@ class Binomial:
             return 0
         k = int(k)
         return bicoe(self.n, k) * (self.p**k) * ((1-self.p) ** (self.n-k))
+
+    def cdf(self, k):
+        """Do cdf."""
+        if k < 0:
+            return 0
+        k = int(k)
+        return sum([self.pmf(x) for x in range(0, k+1)])
