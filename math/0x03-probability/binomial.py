@@ -9,6 +9,18 @@ Binomial distribution.
 """
 
 
+def fact(n):
+    """Factorial."""
+    if n == 1 or n == 0:
+        return 1
+    return n * fact(n - 1)
+
+
+def bicoe(n, k):
+    """Get binomial coefficient."""
+    return fact(n) / (fact(k)*fact(n-k))
+
+
 def mean(data):
     """Get mean."""
     return sum(data) / len(data)
@@ -41,3 +53,7 @@ class Binomial:
             p_value = 1-(variance(data) / mean(data))
             self.n = round(mean(data) / p_value)
             self.p = mean(data) / self.n
+
+    def pmf(self, k):
+        """Do pmf."""
+        return bicoe(self.n, k) * (self.p**k) * ((1-self.p) ** (self.n-k))
