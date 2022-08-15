@@ -1,0 +1,5 @@
+data/
+*main*
+__pycache__/
+.ipynb_checkpoints/
+*.npz
