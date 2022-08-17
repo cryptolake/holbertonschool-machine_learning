@@ -10,6 +10,8 @@ class Neuron:
         """
         Initialize the neuron.
 
+        nx: the number of input features to the neuron.
+
         W: The weights vector for the neuron.
         b: The bias for the neuron.
         A: The activated output of the neuron (prediction).
