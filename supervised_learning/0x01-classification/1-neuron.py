@@ -7,7 +7,13 @@ class Neuron:
     """Single neuron performing binary classification."""
 
     def __init__(self, nx):
-        """Initialize the neuron."""
+        """
+        Initialize the neuron.
+
+        W: The weights vector for the neuron.
+        b: The bias for the neuron.
+        A: The activated output of the neuron (prediction).
+        """
         if type(nx) is not int:
             raise TypeError('nx must be an integer')
         if nx < 1:
