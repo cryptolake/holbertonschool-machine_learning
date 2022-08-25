@@ -6,5 +6,7 @@ import tensorflow.compat.v1 as tf
 
 def create_layer(prev, n, activation):
     """Create tensorflow layer."""
-    layer = tf.keras.layers.Dense(n, activation=activation, name="layer")
+    layer = tf.keras.layers.Dense(n, activation=activation, name="layer",
+                                  kernel_initializer=tf.keras.\
+                                  initializers.VarianceScaling(mode='fan_avg'))
     return layer(prev)
