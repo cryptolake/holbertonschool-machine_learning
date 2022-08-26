@@ -4,7 +4,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.npz
 Pipfile.lock
-supervised_learning/0x02-tensorflow/checkpoint
-supervised_learning/0x02-tensorflow/model.ckpt-200.data-00000-of-00001
-supervised_learning/0x02-tensorflow/model.ckpt-200.index
-supervised_learning/0x02-tensorflow/model.ckpt-200.meta
+model.ckpt*
+checkpoint
