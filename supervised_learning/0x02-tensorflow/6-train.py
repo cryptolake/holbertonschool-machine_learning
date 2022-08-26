@@ -46,8 +46,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     init = tf.global_variables_initializer()
 
     saver = tf.train.Saver()
-    sess = tf.Session()
-    with tf.Sesstion() as sess:
+    with tf.Session() as sess:
         sess.run(init)
         for i in range(iterations):
             t_loss, t_accur = sess.run((loss, accuracy), feed_dict={
