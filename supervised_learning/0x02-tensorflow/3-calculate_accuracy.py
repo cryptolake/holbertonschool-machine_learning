@@ -6,6 +6,7 @@ import tensorflow.compat.v1 as tf
 
 def calculate_accuracy(y, y_pred):
     """Accuracy of prediction."""
-    correct = tf.where(tf.math.equal(y, y_pred), y, y_pred)
-
-    return tf.reduce_mean(correct)
+    y = tf.argmax(y, axis=1)
+    y_pred = tf.argmax(y_pred, axis=1)
+    correct = tf.equal(y, y_pred)
+    return tf.reduce_mean(tf.cast(correct, dtype='float'))
