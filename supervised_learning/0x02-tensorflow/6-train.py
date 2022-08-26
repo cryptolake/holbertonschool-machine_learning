@@ -54,11 +54,11 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
             v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
                 x: X_valid, y: Y_valid})
             if i % 100 == 0:
-                print(f"""After {i} iterations:
-    \tTraining Cost: {t_loss}
-    \tTraining Accuracy: {t_accur}
-    \tValidation Cost: {v_loss}
-    \tValidation Accuracy: {v_accur}""")
+                print("After {} iterations:".format(i))
+                print("\tTraining Cost: {}".format(t_loss))
+                print("\tTraining Accuracy: {}".format(t_accur))
+                print("\tValidation Cost: {}".format(v_loss))
+                print("\tValidation Accuracy: {}".format(v_accur))
             _ = sess.run(train_op, feed_dict={
                 x: X_train, y: Y_train})
 
@@ -68,9 +68,9 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                 x: X_train, y: Y_train})
             v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
                 x: X_valid, y: Y_valid})
-            print(f"""After {i} iterations:
-    \tTraining Cost: {t_loss}
-    \tTraining Accuracy: {t_accur}
-    \tValidation Cost: {v_loss}
-    \tValidation Accuracy: {v_accur}""")
+            print("After {} iterations:".format(i))
+            print("\tTraining Cost: {}".format(t_loss))
+            print("\tTraining Accuracy: {}".format(t_accur))
+            print("\tValidation Cost: {}".format(v_loss))
+            print("\tValidation Accuracy: {}".format(v_accur))
         return saver.save(sess, save_path, iterations)
