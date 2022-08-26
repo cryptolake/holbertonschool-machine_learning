@@ -63,7 +63,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                 x: X_train, y: Y_train})
 
         i += 1
-        if i % 100 == 0 and iterations % 100 == 0:
+        if i % 100 == 0:
             t_loss, t_accur = sess.run((loss, accuracy), feed_dict={
                 x: X_train, y: Y_train})
             v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
