@@ -9,5 +9,3 @@ def create_train_op(loss, alpha):
     train = tf.train.GradientDescentOptimizer(learning_rate=alpha)
     grads = train.compute_gradients(loss)
     return train.apply_gradients(grads)
-
-
