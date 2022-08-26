@@ -36,31 +36,41 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     loss = calculate_loss(y, y_pred)
 
     train_op = create_train_op(loss, alpha)
+    tf.add_to_collection(x, 'x')
+    tf.add_to_collection(y, 'y')
+    tf.add_to_collection(y_pred, 'y_pred')
+    tf.add_to_collection(loss, 'loss')
+    tf.add_to_collection(accuracy, 'accuracy')
+    tf.add_to_collection(train_op, 'train_op')
 
     init = tf.global_variables_initializer()
 
     saver = tf.train.Saver()
     sess = tf.Session()
-    sess.run(init, feed_dict={x: X_train, y: Y_train})
-    t_loss, t_accur = sess.run((loss, accuracy), feed_dict={
-                               x: X_train, y: Y_train})
-    v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
-        x: X_valid, y: Y_valid})
-
-    print(f"""After 0 iterations:
-\tTraining Cost: {t_loss}
-\tTraining Accuracy: {t_accur}
-\tValidation Cost: {v_loss}
-\tValidation Accuracy: {v_accur}""")
+    sess.run(init)
     for i in range(iterations):
-        if (i+1) % 100 == 0:
-            print(f"""After {i+1} iterations:
-\tTraining Cost: {t_loss}
-\tTraining Accuracy: {t_accur}
-\tValidation Cost: {v_loss}
-\tValidation Accuracy: {v_accur}""")
-        _, t_loss, t_accur = sess.run((train_op, loss, accuracy), feed_dict={
-                                      x: X_train, y: Y_train})
+        t_loss, t_accur = sess.run((loss, accuracy), feed_dict={
+            x: X_train, y: Y_train})
         v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
             x: X_valid, y: Y_valid})
+        if i % 100 == 0:
+            print(f"""After {i} iterations:
+\tTraining Cost: {t_loss}
+\tTraining Accuracy: {t_accur}
+\tValidation Cost: {v_loss}
+\tValidation Accuracy: {v_accur}""")
+        _ = sess.run(train_op, feed_dict={
+            x: X_train, y: Y_train})
+
+    i += 1
+    if i % 100 == 0:
+        t_loss, t_accur = sess.run((loss, accuracy), feed_dict={
+            x: X_train, y: Y_train})
+        v_loss, v_accur = sess.run((loss, accuracy), feed_dict={
+            x: X_valid, y: Y_valid})
+        print(f"""After {i} iterations:
+\tTraining Cost: {t_loss}
+\tTraining Accuracy: {t_accur}
+\tValidation Cost: {v_loss}
+\tValidation Accuracy: {v_accur}""")
     return saver.save(sess, save_path, iterations)
