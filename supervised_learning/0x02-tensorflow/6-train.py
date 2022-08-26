@@ -36,6 +36,11 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     loss = calculate_loss(y, y_pred)
 
     train_op = create_train_op(loss, alpha)
+
+    init = tf.global_variables_initializer()
+
+    saver = tf.train.Saver()
+
     tf.add_to_collection(x, 'x')
     tf.add_to_collection(y, 'y')
     tf.add_to_collection(y_pred, 'y_pred')
@@ -43,9 +48,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     tf.add_to_collection(accuracy, 'accuracy')
     tf.add_to_collection(train_op, 'train_op')
 
-    init = tf.global_variables_initializer()
-
-    saver = tf.train.Saver()
     with tf.Session() as sess:
         sess.run(init)
         for i in range(iterations):
