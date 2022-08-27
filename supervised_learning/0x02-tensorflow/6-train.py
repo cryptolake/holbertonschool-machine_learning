@@ -41,12 +41,12 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
 
     saver = tf.train.Saver()
 
-    tf.add_to_collection(x, 'x')
-    tf.add_to_collection(y, 'y')
-    tf.add_to_collection(y_pred, 'y_pred')
-    tf.add_to_collection(loss, 'loss')
-    tf.add_to_collection(accuracy, 'accuracy')
-    tf.add_to_collection(train_op, 'train_op')
+    tf.add_to_collection('x', x)
+    tf.add_to_collection('y', y)
+    tf.add_to_collection('y_pred', y_pred)
+    tf.add_to_collection('loss', loss)
+    tf.add_to_collection('accuracy', accuracy)
+    tf.add_to_collection('train_op', train_op)
 
     with tf.Session() as sess:
         sess.run(init)
