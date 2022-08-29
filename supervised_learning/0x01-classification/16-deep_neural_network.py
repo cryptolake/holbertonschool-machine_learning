@@ -30,13 +30,13 @@ class DeepNeuralNetwork:
             if layers[la] < 1:
                 raise TypeError("layers must be a list of positive integers")
             if la == 0:
-                self.weights[f'W{la+1}'] = np.random.randn(layers[la],
+                self.weights['W'+str(la+1)] = np.random.randn(layers[la],
                                                            layers[la])*\
                     np.sqrt(2/layers[la])
             else:
-                self.weights[f'W{la+1}'] = np.random.randn(layers[la],
+                self.weights['W'+str(la+1)] = np.random.randn(layers[la],
                                                            layers[la-1])*\
                     np.sqrt(2/layers[la-1])
-            self.weights[f'b{la+1}'] = np.zeros((layers[la], 1))
+            self.weights['b'+str(la+1)] = np.zeros((layers[la], 1))
         self.L = len(layers)
         self.cache = {}
