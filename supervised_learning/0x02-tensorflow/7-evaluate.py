@@ -6,10 +6,11 @@ import tensorflow.compat.v1 as tf
 
 def evaluate(X, Y, save_path):
     """Evaluate tensorflow model"""
+    tf.reset_default_graph()
+    y_pred = tf.get_variable('y_pred', shape=(None, 10))
+    accuracy = tf.get_variable('accuracy', shape=())
+    loss = tf.get_variable('loss', shape=())
+    saver = tf.train.Saver()
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph(save_path+'.meta')
         saver.restore(sess, save_path)
-        y_pred = tf.get_collection('y_pred')
-        accuracy = tf.get_collection('accuracy')
-        loss = tf.get_collection('loss')
-        return y_pred[0], accuracy[0], loss[0]
+        return y_pred.eval(), accuracy.eval(), loss.eval()
