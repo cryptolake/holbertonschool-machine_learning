@@ -31,11 +31,11 @@ class DeepNeuralNetwork:
                 raise TypeError("layers must be a list of positive integers")
             if la == 0:
                 self.weights['W'+str(la+1)] = np.random.randn(layers[la],
-                                                           layers[la])*\
-                    np.sqrt(2/layers[la])
+                                                              nx) * \
+                    np.sqrt(2/nx)
             else:
                 self.weights['W'+str(la+1)] = np.random.randn(layers[la],
-                                                           layers[la-1])*\
+                                                              layers[la-1]) * \
                     np.sqrt(2/layers[la-1])
             self.weights['b'+str(la+1)] = np.zeros((layers[la], 1))
         self.L = len(layers)
