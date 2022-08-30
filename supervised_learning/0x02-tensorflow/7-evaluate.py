@@ -12,5 +12,4 @@ def evaluate(X, Y, save_path):
         y_pred = tf.get_collection('y_pred')
         accuracy = tf.get_collection('accuracy')
         cost = tf.get_collection('loss')
-        graph = tf.get_default_graph()
-        # return y_pred[0], accuracy[0], cost[0]
+        return y_pred[0], accuracy[0], cost[0]
