@@ -134,10 +134,11 @@ class DeepNeuralNetwork:
 
     def save(self, filename):
         """Save as pickkl file."""
-        if '.pkl' not in filename:
+        if filename[-4:] != '.pkl':
             filename += '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
+            f.close()
 
     @staticmethod
     def load(filename):
@@ -145,6 +146,7 @@ class DeepNeuralNetwork:
         with open(filename, 'rb') as f:
             try:
                 model = pickle.load(f)
+                f.close()
             except Exception:
                 return None
         return model
