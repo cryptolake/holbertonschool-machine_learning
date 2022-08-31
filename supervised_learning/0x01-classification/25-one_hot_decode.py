@@ -8,4 +8,6 @@ def one_hot_decode(one_hot):
     """One hot deconding on encoded array."""
     if type(one_hot) is not np.ndarray:
         return None
-    return np.argmax(one_hot.T, axis=1)
+    if len(one_hot) < 2:
+        return None
+    return np.where(one_hot.T == 1)[1]
