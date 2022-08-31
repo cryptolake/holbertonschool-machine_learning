@@ -123,7 +123,7 @@ class DeepNeuralNetwork:
             self.gradient_descent(Y, self.cache, alpha)
             costs.append(self.cost(Y, self.cache['A'+str(self.L)]))
             if verbose:
-                print(f"Cost after {i} iterations: {costs[-1]}")
+                print("Cost after {} iterations: {}".format(i, costs[-1]))
             if i != 0 and graph and (i % step) == 0:
                 plt.plot(costs)
                 plt.xlabel('iteration')
@@ -138,7 +138,6 @@ class DeepNeuralNetwork:
             filename += '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
-            f.close()
 
     @staticmethod
     def load(filename):
@@ -146,8 +145,6 @@ class DeepNeuralNetwork:
         with open(filename, 'rb') as f:
             try:
                 model = pickle.load(f)
-                f.close()
             except Exception:
-                f.close()
                 return None
         return model
