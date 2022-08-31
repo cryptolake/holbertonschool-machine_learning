@@ -142,10 +142,9 @@ class DeepNeuralNetwork:
     @staticmethod
     def load(filename):
         """Load DeepNeuralNetwork from pickle file."""
-        with open(filename, 'rb') as f:
-            try:
+        try:
+            with open(filename, 'rb') as f:
                 model = pickle.load(f)
-            except Exception:
-                f.close()
-                return None
+        except FileNotFoundError:
+            return None
         return model
