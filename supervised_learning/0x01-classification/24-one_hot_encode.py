@@ -10,7 +10,7 @@ def one_hot_encode(Y, classes):
         return None
     if np.max(Y) > classes:
         return None
-    if not isinstance(Y, np.ndarray):
+    if type(Y) is not np.ndarray:
         return None
     if type(classes) is not int:
         return None
@@ -18,5 +18,4 @@ def one_hot_encode(Y, classes):
         return None
     y_one_hot = np.zeros((Y.size, classes))
     y_one_hot[Y, np.arange(classes)] = 1
-
     return y_one_hot
