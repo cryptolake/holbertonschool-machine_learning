@@ -148,5 +148,6 @@ class DeepNeuralNetwork:
                 model = pickle.load(f)
                 f.close()
             except Exception:
+                f.close()
                 return None
         return model
