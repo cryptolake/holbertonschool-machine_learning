@@ -86,7 +86,7 @@ class NeuralNetwork:
         return NeuralNetwork.sigmoid(x) * (1-NeuralNetwork.sigmoid(x))
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
-        """Gradient descent to improve neuron."""
+        """Gradient descent to improve neurons."""
         m = len(A1[0])
         dz2 = A2 - Y
         dw2 = (1/m) * np.matmul(dz2, A1.transpose())
