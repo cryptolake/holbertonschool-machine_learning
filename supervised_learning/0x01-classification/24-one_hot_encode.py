@@ -16,6 +16,5 @@ def one_hot_encode(Y, classes):
         return None
     if type(Y) is not np.ndarray:
         return None
-    y_one_hot = np.zeros((Y.size, classes))
-    y_one_hot[Y, np.arange(classes)] = 1
-    return y_one_hot
+    y_one_hot = np.eye(Y.size, classes)[Y]
+    return y_one_hot.T
