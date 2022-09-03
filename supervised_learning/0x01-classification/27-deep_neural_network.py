@@ -62,7 +62,7 @@ class DeepNeuralNetwork:
     def softmax(z):
         """Softmax function."""
         ex = np.exp(z)
-        return ex / ex.sum(axis=0)
+        return ex / ex.sum(axis=0, keepdims=True)
 
     @staticmethod
     def sigmoid(z):
@@ -72,22 +72,21 @@ class DeepNeuralNetwork:
     def forward_prop(self, X):
         """Forward propagation."""
         self.__cache['A0'] = X
-        for i in range(self.L-1):
-            z = np.dot(self.weights['W'+str(i+1)], self.__cache['A'+str(i)])\
-                + self.__weights['b'+str(i+1)]
-            A = self.sigmoid(z)
-            self.__cache['A'+str(i+1)] = A
-        i += 1
-        z = np.dot(self.weights['W'+str(i+1)], self.__cache['A'+str(i)])\
-            + self.__weights['b'+str(i+1)]
-        A = self.softmax(z)
-        self.__cache['A'+str(self.L)] = A
+        for i in range(1, self.L+1):
+            z = np.dot(self.weights['W'+str(i)], self.__cache['A'+str(i)])\
+                + self.__weights['b'+str(i)]
+            if i == self.L:
+                A = self.softmax(z)
+            else:
+                A = self.sigmoid(z)
+            self.__cache['A'+str(i)] = A
         return A, self.__cache
 
     def cost(self, Y, A):
         """Cross entropy loss of neural network."""
-        loss = -np.sum(Y*np.log(A), axis=0)
-        return np.sum(loss)/A.shape[1]
+        m = A.shape[1]
+        loss = -Y * np.log(A)
+        return np.sum(loss)/m
 
     def evaluate(self, X, Y):
         """Evaluate Model."""
@@ -102,9 +101,9 @@ class DeepNeuralNetwork:
         m = len(Y[0])
         dz = self.cache['A'+str(self.L)] - Y
         for i in range(self.L, 0, -1):
-            dw = (1/m) * np.matmul(dz, cache['A'+str(i-1)].transpose())
+            dw = (1/m) * np.matmul(dz, cache['A'+str(i-1)].T)
             db = (1/m) * np.sum(dz, axis=1, keepdims=True)
-            da = np.matmul(self.__weights['W'+str(i)].transpose(), dz)
+            da = np.matmul(self.__weights['W'+str(i)].T, dz)
             dz = da * (cache['A'+str(i-1)] *
                        (1-cache['A'+str(i-1)]))
             self.__weights['W'+str(i)] = self.__weights['W'+str(i)]\
@@ -135,7 +134,7 @@ class DeepNeuralNetwork:
             costs.append(self.cost(Y, self.cache['A'+str(self.L)]))
             if (i % step) == 0:
                 if verbose:
-                    print(f"Cost after {i} iterations: {costs[-1]}")
+                    print("Cost after {} iterations: {}".format(i, costs[-1]))
                 if graph:
                     plt.plot(costs)
                     plt.xlabel('iteration')

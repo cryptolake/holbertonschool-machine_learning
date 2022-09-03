@@ -121,12 +121,13 @@ class DeepNeuralNetwork:
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
             costs.append(self.cost(Y, self.cache['A'+str(self.L)]))
-            if verbose:
-                print(f"Cost after {i} iterations: {costs[-1]}")
-            if i != 0 and graph and (i % step) == 0:
-                plt.plot(costs)
-                plt.xlabel('iteration')
-                plt.ylabel('cost')
-                plt.title('Training Cost')
-                plt.show()
+            if (i % step) == 0:
+                if verbose:
+                    print(f"Cost after {i} iterations: {costs[-1]}")
+                if graph:
+                    plt.plot(costs)
+                    plt.xlabel('iteration')
+                    plt.ylabel('cost')
+                    plt.title('Training Cost')
+                    plt.show()
         return self.evaluate(X, Y)
