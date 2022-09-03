@@ -8,7 +8,7 @@ def evaluate(X, Y, save_path):
     """Evaluate tensorflow model."""
     saver = tf.train.import_meta_graph(save_path+'.meta')
     with tf.Session() as sess:
-        saver.restore(sess, tf.train.latest_checkpoint('./'))
+        saver.restore(sess, save_path)
         accuracy = tf.get_collection('accuracy')[0]
         loss = tf.get_collection('loss')[0]
         y_pred = tf.get_collection('y_pred')[0]
