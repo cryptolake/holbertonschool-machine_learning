@@ -73,7 +73,7 @@ class DeepNeuralNetwork:
         """Forward propagation."""
         self.__cache['A0'] = X
         for i in range(1, self.L+1):
-            z = np.dot(self.weights['W'+str(i)], self.__cache['A'+str(i)])\
+            z = np.dot(self.weights['W'+str(i)], self.__cache['A'+str(i-1)])\
                 + self.__weights['b'+str(i)]
             if i == self.L:
                 A = self.softmax(z)
@@ -84,9 +84,9 @@ class DeepNeuralNetwork:
 
     def cost(self, Y, A):
         """Cross entropy loss of neural network."""
-        m = A.shape[1]
-        loss = -Y * np.log(A)
-        return np.sum(loss)/m
+        m = len(Y[0])
+        loss = Y * np.log(A)
+        return (-1/m) * np.sum(loss)
 
     def evaluate(self, X, Y):
         """Evaluate Model."""
