@@ -80,7 +80,7 @@ class DeepNeuralNetwork:
             else:
                 A = self.sigmoid(z)
             self.__cache['A'+str(i)] = A
-        return A, self.__cache
+        return self.__cache['A'+str(self.L)], self.__cache
 
     def cost(self, Y, A):
         """Cross entropy loss of neural network."""
@@ -92,9 +92,8 @@ class DeepNeuralNetwork:
         """Evaluate Model."""
         A, _ = self.forward_prop(X)
         cost = self.cost(Y, A)
-        preds = A.T
-        preds[np.arange(len(preds)), preds.argmax(1)] = 1
-        return preds.T, cost
+        preds = np.eye(A.shape[0])[np.argmax(A, axis=0)].T
+        return preds, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Gradient descent as back propagation."""
