@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Normalization."""
-import numpy as np
 
 
 def normalize(x, m, s):
@@ -19,4 +18,4 @@ def normalize(x, m, s):
 
     Returns: The normalized X matrix
     """
-    return (x-m)/np.sqrt(s)
+    return (x-m)/s
