@@ -4,5 +4,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.npz
 Pipfile.lock
-model.ckpt*
+*.ckpt*
 checkpoint
