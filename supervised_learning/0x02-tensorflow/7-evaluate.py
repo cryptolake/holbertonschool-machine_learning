@@ -6,8 +6,8 @@ import tensorflow.compat.v1 as tf
 
 def evaluate(X, Y, save_path):
     """Evaluate tensorflow model."""
-    saver = tf.train.import_meta_graph(save_path+'.meta')
     with tf.Session() as sess:
+        saver = tf.train.import_meta_graph(save_path+'.meta')
         saver.restore(sess, save_path)
         accuracy = tf.get_collection('accuracy')[0]
         loss = tf.get_collection('loss')[0]
