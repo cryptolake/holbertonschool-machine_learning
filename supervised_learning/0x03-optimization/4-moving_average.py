@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Implement moving average."""
-import numpy as np
 
 
 def moving_average(data, beta):
@@ -12,9 +11,9 @@ def moving_average(data, beta):
 
     Returns: a list containing the moving averages of data
     """
-    v = 0
-    amw = np.array([])
+    v = 0.0
+    amw = []
     for i, p in enumerate(data):
         v = beta * v + (1-beta)*p
-        amw = np.append(amw, v/(1-beta**(i+1)))
+        amw.append(v/(1-beta**(i+1)))
     return amw
