@@ -49,9 +49,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection('loss')[0]
         train_op = tf.get_collection('train_op')[0]
 
-        X_train, Y_train = shuffle_data(X_train, Y_train)
         for epoch in range(epochs):
-            i = 0
+            i = 1
             t_loss, t_accur = sess.run((loss, accuracy),
                                        feed_dict={x: X_train,
                                                   y: Y_train})
@@ -62,20 +61,20 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tTraining Accuracy: {}".format(t_accur))
             print("\tValidation Cost: {}".format(v_loss))
             print("\tValidation Accuracy: {}".format(v_accur))
+            X_train, Y_train = shuffle_data(X_train, Y_train)
             for b in range(0, len(X_train), batch_size):
-                _ = sess.run(train_op,
-                             feed_dict={x: X_train[b:b+batch_size, ],
-                                        y: Y_train[b:b+batch_size, ]})
-                i += 1
+                X_batch = X_train[b:b+batch_size, ]
+                Y_batch = Y_train[b:b+batch_size, ]
+                _ = sess.run(train_op, feed_dict={x: X_batch,
+                                                  y: Y_batch})
                 if i % 100 == 0:
-                    t_loss,\
-                        t_accur = sess.\
-                        run((loss, accuracy),
-                            feed_dict={x: X_train[b:b+batch_size, ],
-                                       y: Y_train[b:b+batch_size, ]})
+                    t_loss, t_accur = sess.run((loss, accuracy),
+                                               feed_dict={x: X_batch,
+                                                          y: Y_batch})
                     print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(t_loss))
                     print("\t\tAccuracy: {}".format(t_accur))
+                i += 1
         t_loss, t_accur = sess.run((loss, accuracy),
                                    feed_dict={x: X_train,
                                               y: Y_train})
