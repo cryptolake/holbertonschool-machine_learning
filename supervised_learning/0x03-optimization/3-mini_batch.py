@@ -52,8 +52,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         for epoch in range(epochs):
             i = 1
             t_loss, t_accur = sess.run((loss, accuracy),
-                                       feed_dict={x: X_train,
-                                                  y: Y_train})
+                                       feed_dict={x: X_train, y: Y_train})
             v_loss, v_accur = sess.run((loss, accuracy),
                                        feed_dict={x: X_valid, y: Y_valid})
             print("After {} epochs:".format(epoch))
@@ -61,12 +60,11 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tTraining Accuracy: {}".format(t_accur))
             print("\tValidation Cost: {}".format(v_loss))
             print("\tValidation Accuracy: {}".format(v_accur))
-            X_train, Y_train = shuffle_data(X_train, Y_train)
+            X_shuffle, Y_shuffle = shuffle_data(X_train, Y_train)
             for b in range(0, len(X_train), batch_size):
-                X_batch = X_train[b:b+batch_size, ]
-                Y_batch = Y_train[b:b+batch_size, ]
-                _ = sess.run(train_op, feed_dict={x: X_batch,
-                                                  y: Y_batch})
+                X_batch = X_shuffle[b:b+batch_size, ]
+                Y_batch = Y_shuffle[b:b+batch_size, ]
+                _ = sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
                 if i % 100 == 0:
                     t_loss, t_accur = sess.run((loss, accuracy),
                                                feed_dict={x: X_batch,
@@ -76,8 +74,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     print("\t\tAccuracy: {}".format(t_accur))
                 i += 1
         t_loss, t_accur = sess.run((loss, accuracy),
-                                   feed_dict={x: X_train,
-                                              y: Y_train})
+                                   feed_dict={x: X_train, y: Y_train})
         v_loss, v_accur = sess.run((loss, accuracy),
                                    feed_dict={x: X_valid, y: Y_valid})
         print("After {} epochs:".format(epoch+1))
