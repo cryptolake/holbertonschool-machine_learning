@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Adam optimization."""
 
-import tensorflow.compat.v1 as tf
-
 
 def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     """
