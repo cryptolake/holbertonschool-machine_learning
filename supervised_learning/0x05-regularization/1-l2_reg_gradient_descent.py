@@ -2,6 +2,7 @@
 """L2 Regulazation in Gradient descent."""
 import numpy as np
 
+
 def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """L2 Regulazation in Gradient descent."""
     m = len(Y[0])
