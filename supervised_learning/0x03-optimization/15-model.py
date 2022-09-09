@@ -17,7 +17,6 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     """
     train = tf.train.AdamOptimizer(alpha, beta1, beta2, epsilon)
     grads = train.compute_gradients(loss)
-    print('\n\n\n\n\n\n\n\n', grads, '\n\n\n\n\n')
     return train.apply_gradients(grads)
 
 
