@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""L2 Regulazation cost layer in tensorflow."""
+"""Dropout in NN."""
 import numpy as np
 
 
