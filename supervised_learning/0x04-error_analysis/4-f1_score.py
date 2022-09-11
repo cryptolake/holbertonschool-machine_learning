@@ -11,4 +11,4 @@ def f1_score(confusion):
     """Get F1 score from confusion matrix."""
     pres = precision(confusion)
     sens = sensitivity(confusion)
-    return 2 *((pres * sens)/(pres + sens))
+    return 2 * ((pres * sens) / (pres + sens))
