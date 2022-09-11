@@ -10,6 +10,5 @@ def create_confusion_matrix(labels, logits):
     for i in range(m):
         inda = np.argwhere(labels[i] == 1)
         indo = np.argwhere(logits[i] == 1)
-        cm[inda, indo] += 1 
+        cm[inda, indo] += 1
     return cm
-
