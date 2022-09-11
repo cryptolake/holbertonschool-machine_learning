@@ -11,4 +11,6 @@ def create_confusion_matrix(labels, logits):
         inda = np.argwhere(labels[i] == 1)
         indo = np.argwhere(logits[i] == 1)
         cm[inda, indo] += 1
+    # Another way of doing this is
+    # np.matmul(labels.T, logits)
     return cm

@@ -7,6 +7,8 @@ def sensitivity(confusion):
     """Get Sensitivity from confusion matrix."""
     classes = confusion.shape[0]
     sens = np.zeros((classes))
+    # instead of looping we could:
+    # tp = np.diagonal(confusion)
     for cl in range(classes):
         TP = confusion[cl, cl]
         N = np.sum(confusion[cl, :])

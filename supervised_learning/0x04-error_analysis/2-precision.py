@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Get Precision form confusion matrix."""
+"""Get Precision from confusion matrix."""
 import numpy as np
 
 
