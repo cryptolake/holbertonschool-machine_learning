@@ -2,6 +2,7 @@
 """Dropout in NN."""
 import numpy as np
 
+
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     """Gradient descent with dropout."""
     m = len(Y[0])
