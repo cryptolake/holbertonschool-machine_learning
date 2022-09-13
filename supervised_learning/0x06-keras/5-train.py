@@ -3,8 +3,9 @@
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs,
-                validation_data=None, verbose=True, shuffle=False):
+def train_model(network, data, labels, batch_size, epochs, 
+                validation_data=None, early_stopping=False, 
+                patience=0, verbose=True, shuffle=False):
     """
     Train Keras Model.
 
@@ -21,6 +22,8 @@ def train_model(network, data, labels, batch_size, epochs,
 
     verbose is a boolean that determines if output should be
     printed during training
+
+    validation_data is the data to validate the model with, if not None
 
     shuffle is a boolean that determines whether to
     shuffle the batches every epoch.
