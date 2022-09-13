@@ -3,8 +3,8 @@
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs, 
-                validation_data=None, early_stopping=False, 
+def train_model(network, data, labels, batch_size, epochs,
+                validation_data=None, early_stopping=False,
                 patience=0, verbose=True, shuffle=False):
     """
     Train Keras Model.
@@ -25,7 +25,8 @@ def train_model(network, data, labels, batch_size, epochs,
 
     validation_data is the data to validate the model with, if not None
 
-    early_stopping is a boolean that indicates whether early stopping should be used
+    early_stopping is a boolean that indicates whether early stopping
+    should be used
 
     patience is the patience used for early stopping
 
