@@ -5,7 +5,7 @@ import tensorflow.keras as K
 
 def save_model(network, filename):
     """Save model."""
-    network.save_model(filename)
+    K.models.save_model(network, filename)
     return None
 
 
