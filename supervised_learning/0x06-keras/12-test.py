@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Save and restore keras Model weights."""
+"""Evaluate model."""
 import tensorflow.keras as K
 
 
