@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build Keras model."""
-import tensoflow.keras as K
+import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
