@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Optimize and compile Keras model."""
 import tensorflow.keras as K
 
