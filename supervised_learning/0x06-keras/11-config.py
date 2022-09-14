@@ -10,7 +10,7 @@ def save_config(network, filename):
     return None
 
 
-def load_configg(filename):
+def load_config(filename):
     """Load model."""
     with open(filename, 'r') as modeljson:
         model = K.models.model_from_json(modeljson.read())
