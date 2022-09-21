@@ -2,6 +2,7 @@
 """Pooling Forward propagation."""
 import numpy as np
 
+
 def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     """Backward propagation for Conv layer."""
     m, prev_h, prev_w, _ = A_prev.shape
@@ -26,10 +27,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                 for f in range(new_c):
                     filt = W[:, :, :, f]
                     dz = dZ[img, h, w, f]
-                    slice_A = A_prev[img, x:x+kh, y:y+kw,:]
+                    slice_A = A_prev[img, x:x+kh, y:y+kw, :]
                     dw[:, :, :, f] += slice_A * dz
-                    dA[img, x:x+kh, y:y+kw,:] += dz * filt
-                    
+                    dA[img, x:x+kh, y:y+kw, :] += dz * filt
+
     if padding == 'same':
         dA = dA[:, ph:-ph, pw:-pw, :]
     return dA, dw, db
