@@ -46,12 +46,12 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     npad = ((0, 0), (ph, ph), (pw, pw), (0, 0))
     A_pad = np.pad(A_prev, pad_width=npad, mode='constant')
     output = np.zeros((m, oh, ow, nc))
-    for i in range(0, oh):
-        x = i * sh
-        for j in range(0, ow):
-            y = j * sw
-            for k in range(nc):
-                filterk = W[:, :, :, k]
+    for k in range(nc):
+        filterk = W[:, :, :, k]
+        for i in range(oh):
+            for j in range(ow):
+                x = i * sh
+                y = j * sw
                 to_conv = A_pad[:, x:x+kh, y:y+kw, :]
                 output[:, i, j, k] = np.tensordot(to_conv, filterk, axes=3)
 
