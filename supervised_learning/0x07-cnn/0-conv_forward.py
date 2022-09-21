@@ -51,9 +51,9 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         for j in range(0, ow):
             y = j * sw
             for k in range(nc):
-                output[:, i, j, k] = np.sum(
-                    A_pad[:, x:x+kh, y:y+kw] * W[:, :, :, k],
-                    axis=(1, 2, 3))
+                filterk = W[:, :, :, k]
+                to_conv = A_pad[:, x:x+kh, y:y+kw, :]
+                output[:, i, j, k] = np.tensordot(to_conv, filterk, axes=3)
 
-    A = activation(output + b)
-    return A
+    output = activation(output + b)
+    return output
