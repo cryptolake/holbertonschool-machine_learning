@@ -33,20 +33,20 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         sh is the stride for the height
         sw is the stride for the width
     """
-    m, h, w, _ = A_prev.shape
-    kh, kw, _, nc = W.shape
+    m, h, w, prev_c = A_prev.shape
+    kh, kw, prev_c, new_c = W.shape
     sh, sw = stride
     if padding == 'valid':
-        ph, pw = 0, 0
-    else:
+        pw = ph = 0
+    elif padding == 'same':
         ph = int(np.ceil((sh*(h-1)-h+kh)/2))
         pw = int(np.ceil((sw*(w-1)-w+kw)/2))
     oh = int(((h+2*pw-kh)/sh)+1)
     ow = int(((w+2*pw-kw)/sw)+1)
     npad = ((0, 0), (ph, ph), (pw, pw), (0, 0))
     A_pad = np.pad(A_prev, pad_width=npad, mode='constant')
-    output = np.zeros((m, oh, ow, nc))
-    for k in range(nc):
+    output = np.zeros((m, oh, ow, new_c))
+    for k in range(new_c):
         filterk = W[:, :, :, k]
         for i in range(oh):
             for j in range(ow):
@@ -55,5 +55,5 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                 to_conv = A_pad[:, x:x+kh, y:y+kw, :]
                 output[:, i, j, k] = np.tensordot(to_conv, filterk, axes=3)
 
-    output = activation(output + b)
-    return output
+    A = activation(output + b)
+    return A
