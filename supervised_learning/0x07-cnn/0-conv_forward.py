@@ -41,8 +41,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     else:
         ph = int(np.ceil((sh*(h-1)-h+kh)/2))
         pw = int(np.ceil((sw*(w-1)-w+kw)/2))
-    oh = int((h+2*pw-kh)/sh+1)
-    ow = int((w+2*pw-kw)/sw+1)
+    oh = int(((h+2*pw-kh)/sh)+1)
+    ow = int(((w+2*pw-kw)/sw)+1)
     npad = ((0, 0), (ph, ph), (pw, pw), (0, 0))
     A_pad = np.pad(A_prev, pad_width=npad, mode='constant')
     output = np.zeros((m, oh, ow, nc))
