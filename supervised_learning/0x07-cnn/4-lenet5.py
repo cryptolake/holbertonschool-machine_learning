@@ -25,14 +25,15 @@ def create_conv_layer(prev, size, padding, stride):
     weight = tf.keras.initializers.VarianceScaling(scale=2.0)
     layer = tf.layers.Conv2D(filters=size[2],
                              kernel_size=(size[0], size[1]), strides=stride,
-                             padding=padding, kernel_initializer=weight)
+                             padding=padding, kernel_initializer=weight,
+                             activation='relu')
     return layer(prev)
 
 
 def create_normal_layer(prev, n, activation):
     """Create tensorflow layer."""
     weight = tf.keras.initializers.VarianceScaling(scale=2.0)
-    layer = tf.layers.Dense(n, activation=activation, name="layer",
+    layer = tf.layers.Dense(n, activation=activation,
                             kernel_initializer=weight)
     return layer(prev)
 
@@ -92,7 +93,7 @@ def lenet5(x, y):
     strides = [((1, 1), (2, 2)), ((1, 1), (2, 2))]
     paddings = ['same', 'valid']
     layer_sizes = [120, 84, 10]
-    activations = ['relu', 'relu', 'softmax']
+    activations = ['relu', 'relu', None]
     y_conv = conv_forward_prop(x, conv_sizes, paddings, pool_sizes, strides)
     x_flat = tf.layers.Flatten()(y_conv)
     y_pred = forward_prop(x_flat, layer_sizes, activations)
