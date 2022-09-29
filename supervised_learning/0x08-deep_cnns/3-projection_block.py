@@ -18,7 +18,8 @@ def projection_block(A_prev, filters, s=2):
                          kernel_initializer=init)(AC2)
     BN3 = K.layers.BatchNormalization()(C3)
     CPROJ = K.layers.Conv2D(filters[2], 1, s, padding='same',
-                         kernel_initializer=init)(A_prev)
-    AD = K.layers.Add()([BN3, CPROJ])
+                            kernel_initializer=init)(A_prev)
+    BN4 = K.layers.BatchNormalization()(CPROJ)
+    AD = K.layers.Add()([BN3, BN4])
     FAC = K.layers.Activation('relu')(AD)
     return FAC
