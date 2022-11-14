@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+opencv-python = "==4.1.2.30"
 
 [dev-packages]
 ipykernel = "*"
