@@ -41,13 +41,13 @@ def minor(matrix):
         if type(x) is not list:
             raise TypeError('matrix must be a list of lists')
     if len(matrix) == 0:
-        raise TypeError('matrix must be a list of lists')
+        raise TypeError('matrix must be a non-empty square matrix')
     if len(matrix) == 1:
         return [[1]]
     lm = len(matrix[0])
     for s in matrix:
         if len(s) != lm or len(s) != len(matrix):
-            raise ValueError('matrix must be a square matrix')
+            raise ValueError('matrix must be a non-empty square matrix')
         lm = len(s)
     matmin = []
     for x in range(len(matrix)):
