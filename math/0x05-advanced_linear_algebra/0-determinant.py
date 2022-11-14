@@ -16,7 +16,7 @@ def determinant(matrix):
     for s in matrix:
         if len(s) != lm:
             raise ValueError('matrix must be a square matrix')
-        lm = s
+        lm = len(s)
     if len(matrix) == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     else:
