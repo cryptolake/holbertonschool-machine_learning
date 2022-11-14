@@ -14,7 +14,7 @@ def determinant(matrix):
             return matrix[0][0]
     lm = len(matrix[0])
     for s in matrix:
-        if len(s) != lm:
+        if len(s) != lm or len(s) != len(matrix):
             raise ValueError('matrix must be a square matrix')
         lm = len(s)
     if len(matrix) == 2:
