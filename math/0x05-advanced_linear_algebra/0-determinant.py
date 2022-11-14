@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Find Determinant."""
 
 
 def determinant(matrix):
