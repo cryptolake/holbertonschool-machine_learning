@@ -42,7 +42,7 @@ def minor(matrix):
             raise TypeError('matrix must be a list of lists')
     if len(matrix) == 0:
         raise TypeError('matrix must be a non-empty square matrix')
-    if len(matrix) == 1:
+    if len(matrix) == 1 and len(matrix[0]) == 1:
         return [[1]]
     lm = len(matrix[0])
     for s in matrix:
