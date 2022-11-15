@@ -15,6 +15,9 @@ def definiteness(matrix):
             return None
         nl = s
 
+    if not np.array_equal(matrix, matrix.T):
+        return None
+
     w, _ = np.linalg.eig(matrix)
     p = False
     n = False
