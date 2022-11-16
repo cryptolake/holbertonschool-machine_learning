@@ -5,9 +5,9 @@ import numpy as np
 
 def mean_cov(X):
     """Get mean and covariance matrix."""
-    if len(X.shape) != 2:
+    if type(X) is not np.ndarray or len(X.shape) != 2:
         raise TypeError("X must be a 2D numpy.ndarray")
-    mean = np.mean(X, axis=0)
+    mean = np.mean(X, axis=0, keepdims=True)
     # n, d = X.shape
     n, _ = X.shape
     if n < 2:
