@@ -22,3 +22,15 @@ class MultiNormal:
         cov = np.matmul((self.data - mean).T, (self.data - mean))\
             / (self.data.shape[0] - 1)
         return mean.T, cov.T
+
+    def pdf(self, X):
+        """Pdf of the normal distribution."""
+        d = self.data.shape[1]
+        if type(X) is not np.ndarray:
+            raise TypeError("x must be a numpy.ndarray")
+        if X.shape != (d, 1):
+            raise ValueError("x must have the shape ({}, 1)".format(d))
+        x_m = X - self.mean
+        cov = self.cov
+        return (1. / (np.sqrt((2*np.pi)**d * np.linalg.det(cov))) *
+                np.exp(-(np.linalg.solve(cov, x_m).T.dot(x_m)) / 2.))[0, 0]
