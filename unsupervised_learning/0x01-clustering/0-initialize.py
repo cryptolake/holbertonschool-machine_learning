@@ -5,6 +5,8 @@ import numpy as np
 
 def initialize(X, k):
     """Initialize k-means clustering."""
+    if k <= 0:
+        return None
     mins = np.amin(X, axis=0)
     maxes = np.amax(X, axis=0)
     centroids = np.random.uniform(low=mins, high=maxes, size=(k, X.shape[1]))
