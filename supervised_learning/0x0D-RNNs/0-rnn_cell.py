@@ -25,6 +25,7 @@ class RNNCell:
 
     def forward(self, h_prev, x_t):
         """Perform forward propagation."""
-        h_t = self.tanh(x_t @ self.Wh + h_prev + self.bh)
-        y_t = self.softmax(h_t @ self.Wy + self.by)
-        return h_t, y_t
+        # Current state
+        c_t = self.tanh(x_t @ self.Wh + h_prev + self.bh)
+        y_t = self.softmax(c_t @ self.Wy + self.by)
+        return c_t, y_t
