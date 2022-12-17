@@ -25,8 +25,8 @@ def kmeans(X, k, iterations=1000):
     clss = np.ndarray(shape=(X.shape[0], ))
 
     for _ in range(iterations):
-        clus = X[..., np.newaxis] - clustroids.T
-        clss = np.argmin(np.sqrt(np.sum(clus**2, axis=1)), axis=1)
+        clus = X - clustroids[:, np.newaxis]
+        clss = np.argmin(np.sqrt(np.sum(clus**2, axis=2)), axis=0)
         n_clustroids = clustroids.copy()
         for km in range(k):
             if (X[clss == km].size == 0):
