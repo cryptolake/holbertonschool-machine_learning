@@ -15,6 +15,13 @@ def initialize(X, k):
     return centroids
 
 
+def get_clss(X, clustroids):
+    """Get clss."""
+    clus = X - clustroids[:, np.newaxis]
+    clss = np.argmin(np.sqrt(np.sum(clus**2, axis=2)), axis=0)
+    return clss
+
+
 def kmeans(X, k, iterations=1000):
     """Perform k-means clustering."""
     clustroids = initialize(X, k)
@@ -22,11 +29,9 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if type(iterations) is not int or iterations < 1:
         return None, None
-    clss = np.ndarray(shape=(X.shape[0], ))
 
     for _ in range(iterations):
-        clus = X - clustroids[:, np.newaxis]
-        clss = np.argmin(np.sqrt(np.sum(clus**2, axis=2)), axis=0)
+        clss = get_clss(X, clustroids)
         n_clustroids = clustroids.copy()
         for km in range(k):
             if (X[clss == km].size == 0):
@@ -36,4 +41,4 @@ def kmeans(X, k, iterations=1000):
         if np.all(n_clustroids == clustroids):
             break
         clustroids = n_clustroids
-    return clustroids, clss
+    return clustroids, get_clss(X, clustroids)
