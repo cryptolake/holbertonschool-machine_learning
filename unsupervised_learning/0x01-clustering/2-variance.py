@@ -5,6 +5,10 @@ import numpy as np
 
 def variance(X, C):
     """Get Intra cluster variance.Intra cluster variance."""
+    if type(C) is not np.ndarray or len(C.shape) != 2:
+        return None
+    if type(X) is not np.ndarray or len(X.shape) != 2:
+        return None
     try:
         diff = X[..., np.newaxis] - C.T
         distances = np.sqrt(np.sum(diff**2, axis=1))
