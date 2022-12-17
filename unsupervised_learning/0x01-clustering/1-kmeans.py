@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Initialize k-means clustering."""
+"""k-means clustering."""
 import numpy as np
 
 
@@ -17,8 +17,8 @@ def initialize(X, k):
 
 def get_clss(X, clustroids):
     """Get clss."""
-    clus = X - clustroids[:, np.newaxis]
-    clss = np.argmin(np.sqrt(np.sum(clus**2, axis=2)), axis=0)
+    clus = X[..., np.newaxis] - clustroids.T
+    clss = np.argmin(np.sqrt(np.sum(clus**2, axis=1)), axis=1)
     return clss
 
 
