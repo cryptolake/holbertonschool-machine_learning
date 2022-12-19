@@ -22,7 +22,7 @@ def expectation(X, pi, m, S):
 
     G = np.ndarray(shape=(k_d, n))
     for k in range(k_d):
-        if type(pi[k]) is not float:
+        if not isinstance(pi[k], float):
             return None, None
         G[k] = pi[k]*pdf(X, m[k], S[k])
     sum_k = G.sum(axis=0)
