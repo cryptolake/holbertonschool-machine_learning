@@ -24,5 +24,5 @@ def expectation(X, pi, m, S):
     for k in range(k_d):
         G[k] = pi[k]*pdf(X, m[k], S[k])
     sum_k = G.sum(axis=0)
-    G = G / sum_k
-    return G, np.log(G.sum())
+    res = G / sum_k
+    return res, np.sum(np.log(sum_k))
