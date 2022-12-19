@@ -10,7 +10,7 @@ def expectation(X, pi, m, S):
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None, None
     n, d = X.shape
-    if type(pi) is not np.ndarray or len(pi.shape) != 1:
+    if type(pi) is not np.ndarray or len(pi.shape) != 1 or sum(pi) != 1:
         return None, None
     k_d = pi.shape[0]
     if type(m) is not np.ndarray or len(m.shape) != 2\
@@ -22,8 +22,6 @@ def expectation(X, pi, m, S):
 
     G = np.ndarray(shape=(k_d, n))
     for k in range(k_d):
-        if not isinstance(pi[k], float):
-            return None, None
         G[k] = pi[k]*pdf(X, m[k], S[k])
     sum_k = G.sum(axis=0)
     res = G / sum_k
