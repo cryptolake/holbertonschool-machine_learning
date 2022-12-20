@@ -5,6 +5,9 @@ import numpy as np
 
 def maximization(X, g):
     """Perform Maximization step in EM algorithm for GMM."""
+    if type(X) is not np.ndarray or len(X.shape) != 2:
+        return None, None
+    n, d = X.shape
     n, _ = X.shape
     k, _ = g.shape
     pi = []
