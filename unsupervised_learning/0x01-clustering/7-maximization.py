@@ -8,7 +8,7 @@ def maximization(X, g):
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None, None, None
     n, _ = X.shape
-    if type(g) is not np.ndarray or len(g.shape) != 2:
+    if type(g) is not np.ndarray or len(g.shape) != 2 or g.shape[1] != n:
         return None, None, None
     k, _ = g.shape
     pi = []
