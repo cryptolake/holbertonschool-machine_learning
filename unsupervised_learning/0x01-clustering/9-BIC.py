@@ -28,6 +28,9 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if type(kmax) is not int or kmax < 1:
         return None, None, None, None
 
+    if kmax - kmin < 2:
+        return None, None, None, None
+
     BIC = []
     res = []
     logl = []
@@ -36,7 +39,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
 
     for k in k_s:
         pi, m, S, _, ll = expectation_maximization(X, k, iterations,
-                                                   tol, verbose)
+                                                   tol, verbose=verbose)
         logl.append(ll)
         res.append((pi, m, S))
         p = k*d + k*(d*(d+1)/2) + k-1
