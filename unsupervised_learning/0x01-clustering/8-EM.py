@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Perform complete EM for GMM."""
+import numpy as np
 
 initialize = __import__('4-initialize').initialize
 expectation = __import__('6-expectation').expectation
@@ -23,7 +24,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         if verbose and i % 10 == 0:
             print("Log Likelihood after {} iterations: {:.5f}"
                   .format(i, nl))
-        if abs(ll-nl) <= tol:
+        if np.abs(ll-nl) <= tol:
             g, nl = expectation(X, pi, m, S)
             if verbose:
                 print("Log Likelihood after {} iterations: {:.5f}"

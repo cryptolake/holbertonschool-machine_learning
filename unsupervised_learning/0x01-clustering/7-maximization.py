@@ -5,6 +5,7 @@ import numpy as np
 
 def maximization(X, g):
     """Perform Maximization step in EM algorithm for GMM."""
+    # https://python-course.eu/machine-learning/expectation-maximization-and-gaussian-mixture-models-gmm.php
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None, None, None
     n, _ = X.shape
