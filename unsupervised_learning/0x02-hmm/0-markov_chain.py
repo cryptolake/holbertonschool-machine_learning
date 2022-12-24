@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 """Perform a markov chain."""
+import numpy as np
 
 
 def markov_chain(P, s, t=1):
