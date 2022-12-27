@@ -3,17 +3,15 @@
 import numpy as np
 
 
-def find_path(G, dp, i=0):
+def find_path(G, dp):
     """Find if there's a path to the absorbing state."""
     for d in dp:
         if d not in G:
             for t in dp[d]:
                 if t in G:
                     G.append(d)
-                    find_path(G, dp, t)
+                    find_path(G, dp)
     return G
-
-
 
 
 def absorbing(P):
