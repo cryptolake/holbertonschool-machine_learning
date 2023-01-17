@@ -23,7 +23,6 @@ def bag_of_words(sentences, vocab=None):
     if vocab is None:
         vocab = ' '.join(sentences)
         vocab = np.unique(clean_strings(vocab).split(' '))
-        print(vocab)
     embeddings = np.zeros(shape=(len(sentences), len(vocab)))
     for i, sentence in enumerate(sentences):
         words = clean_strings(sentence).split(' ')
