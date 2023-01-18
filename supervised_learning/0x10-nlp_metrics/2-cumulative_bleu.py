@@ -34,7 +34,7 @@ def cumulative_bleu(references, sentence, n):
     """Cumulative N-gram BLEU SCORE."""
     GAP = 1
     for i in range(1, n+1):
-        GAP *= clipped_precision(references, sentence, i)**(1/4)
+        GAP *= clipped_precision(references, sentence, i)**(1/n)
 
     c = len(sentence)
     r = min(map(lambda x: len(x), references))
