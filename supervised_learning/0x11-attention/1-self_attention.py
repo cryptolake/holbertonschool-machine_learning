@@ -32,23 +32,20 @@ class SelfAttention(tf.keras.layers.Layer):
     def __init__(self, units):
         """Initialize SelfAttention."""
         super().__init__()
-        self.W = tf.keras.layers.Dense(units, activation='tanh')
-        self.U = tf.keras.layers.Dense(units, activation='tanh')
-        self.V = tf.keras.layers.Dense(1, activation='softmax')
+        self.W = tf.keras.layers.Dense(units)
+        self.U = tf.keras.layers.Dense(units)
+        self.V = tf.keras.layers.Dense(1)
 
     def call(self, s_prev, hidden_states):
         """Layer functionality."""
-        b, h_s, _ = hidden_states.shape
+        s_prev = tf.expand_dims(s_prev, 1)
         o_W = self.W(s_prev)
         o_U = self.U(hidden_states)
-
-        energy = []
-        for i in range(h_s):
-            conca = tf.concat([o_U[:, i, :], o_W], axis=1)
-            energy.append(tf.reshape(conca, shape=(b, 1, conca.shape[-1])))
-        energy = tf.concat(energy, axis=1)
-        attention = tf.cast(self.V(energy), dtype=tf.float64)
+        energy = self.V(
+            tf.nn.tanh(o_W + o_U)
+        )
+        attention = tf.nn.softmax(energy, axis=1)
+        attention = tf.cast(attention, dtype=tf.float64)
         hidden_states = tf.cast(hidden_states, dtype=tf.float64)
-        context = tf.reduce_sum(tf.multiply(attention, hidden_states), axis=1)
-
+        context = tf.reduce_sum(attention * hidden_states, axis=1)
         return context, attention
