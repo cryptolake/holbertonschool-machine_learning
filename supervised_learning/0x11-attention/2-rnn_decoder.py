@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Decoder for machine translation keras."""
 import tensorflow as tf
+SelfAttention = __import__('1-self_attention').SelfAttention
 
 
 class RNNDecoder(tf.keras.layers.Layer):
@@ -9,8 +10,8 @@ class RNNDecoder(tf.keras.layers.Layer):
 
     Class constructor def __init__(self, vocab, embedding, units, batch):
         vocab is an integer representing the size of the output vocabulary
-        embedding is an integer representing the dimensionality of the embedding vector
-        units is an integer representing the number
+        embedding is an integer representing the dimensionality
+        of the embedding vector units is an integer representing the number
         of hidden units in the RNN cell
         batch is an integer representing the batch size
         Sets the following public instance attributes:
@@ -51,7 +52,6 @@ class RNNDecoder(tf.keras.layers.Layer):
 
     def call(self, x, s_prev, hidden_states):
         """Contains Layer functionality."""
-        SelfAttention = __import__('1-self_attention').SelfAttention
         x = self.embedding(x)
         attention = SelfAttention(self.units)
         context, _ = attention(s_prev, hidden_states)
