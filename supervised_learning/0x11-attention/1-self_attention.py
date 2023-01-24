@@ -45,7 +45,7 @@ class SelfAttention(tf.keras.layers.Layer):
             tf.nn.tanh(o_W + o_U)
         )
         attention = tf.nn.softmax(energy, axis=1)
-        attention = tf.cast(attention, dtype=tf.float64)
-        hidden_states = tf.cast(hidden_states, dtype=tf.float64)
+        attention = tf.cast(attention, dtype=tf.float32)
+        hidden_states = tf.cast(hidden_states, dtype=tf.float32)
         context = tf.reduce_sum(attention * hidden_states, axis=1)
         return context, attention
