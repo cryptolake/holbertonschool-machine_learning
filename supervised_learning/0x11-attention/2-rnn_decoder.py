@@ -18,16 +18,16 @@ class RNNDecoder(tf.keras.layers.Layer):
         self.F = tf.keras.layers.Dense(vocab)
         self.batch = batch
         self.units = units
+        self.attention = SelfAttention(self.units)
 
     def call(self, x, s_prev, hidden_states):
         """Contains Layer functionality."""
-        attention = SelfAttention(self.units)
-        context, _ = attention(s_prev, hidden_states)
+        context, _ = self.attention(s_prev, hidden_states)
         x = self.embedding(x)
-        context = tf.expand_dims(context, 1)
-        X = tf.concat([tf.cast(context, dtype=tf.float32),
-                      tf.cast(x, dtype=tf.float32)], axis=-1)
-        y, hidden = self.gru(inputs=X)
-        Y = tf.reshape(y, (-1, y.shape[2]))
-        Y = self.F(Y)
-        return Y, hidden
+        X = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
+
+        output, state = self.gru(X)
+        output = tf.reshape(output, (-1, output.shape[2]))
+
+        Y = self.F(output)
+        return Y, state
