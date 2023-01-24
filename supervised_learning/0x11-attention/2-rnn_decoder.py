@@ -29,8 +29,6 @@ class RNNDecoder(tf.keras.layers.Layer):
         decoder hidden state
         hidden_states is a tensor of shape
         (batch, input_seq_len, units)containing the outputs of the encoder
-        You should use SelfAttention = __import__('1-self_attention')
-        .SelfAttention
         You should concatenate the context vector with x in that order
         Returns: y, s
             y is a tensor of shape (batch, vocab) containing the output
