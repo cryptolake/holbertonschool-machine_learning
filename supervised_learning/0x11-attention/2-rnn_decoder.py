@@ -24,8 +24,6 @@ class RNNDecoder(tf.keras.layers.Layer):
         x = self.embedding(x)
         attention = SelfAttention(self.units)
         context, _ = attention(s_prev, hidden_states)
-        x = tf.cast(x, dtype=tf.float64)
-        context = tf.cast(context, dtype=tf.float64)
         context = tf.expand_dims(context, 1)
         X = tf.concat([context, x], axis=-1)
         y, hidden = self.gru(inputs=X)
