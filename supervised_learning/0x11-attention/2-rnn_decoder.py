@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Decoder for machine translation keras."""
 import tensorflow as tf
+
 SelfAttention = __import__('1-self_attention').SelfAttention
 
 
