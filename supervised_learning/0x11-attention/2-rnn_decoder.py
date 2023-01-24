@@ -24,10 +24,10 @@ class RNNDecoder(tf.keras.layers.Layer):
         """Contains Layer functionality."""
         context, _ = self.attention(s_prev, hidden_states)
         x = self.embedding(x)
-        X = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
-
-        output, state = self.gru(X)
-        output = tf.reshape(output, (-1, output.shape[2]))
-
-        Y = self.F(output)
-        return Y, state
+        context = tf.expand_dims(context, 1)
+        X = tf.concat([tf.cast(context, dtype=tf.float32),
+                      tf.cast(x, dtype=tf.float32)], axis=-1)
+        y, hidden = self.gru(X)
+        Y = tf.reshape(y, (-1, y.shape[2]))
+        Y = self.F(Y)
+        return Y, hidden
