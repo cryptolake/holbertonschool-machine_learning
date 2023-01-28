@@ -11,7 +11,7 @@ def sdp_attention(Q, K, V, mask=None):
         res = tf.expand_dims(Q[batch] @ tf.transpose(K[batch]), 0)
         weights.append(res)
 
-    scaled = tf.concat(weights, 0)/tf.sqrt(float(dk))
+    scaled = tf.concat(weights, 0)/tf.sqrt(tf.cast(dk, tf.float32))
     if mask is not None:
         mask *= 1e9
         scaled += mask
