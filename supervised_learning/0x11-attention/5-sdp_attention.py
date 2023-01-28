@@ -5,17 +5,18 @@ import tensorflow as tf
 
 def sdp_attention(Q, K, V, mask=None):
     """Attention as in the 'attention is all you need' paper."""
-    batches, dk, _ = K.shape
+    batches, _, dk = K.shape
     weights = []
     for batch in range(batches):
         res = tf.expand_dims(Q[batch] @ tf.transpose(K[batch]), 0)
         weights.append(res)
+
+    scaled = tf.concat(weights, 0)/tf.sqrt(float(dk))
     if mask is not None:
         mask *= 1e9
+        scaled += mask
     else:
         mask = 0
-
-    scaled = tf.concat(weights, 0)/tf.sqrt(float(dk)) + mask
     att_weights = tf.nn.softmax(scaled)
 
     att = []
