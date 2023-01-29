@@ -27,10 +27,10 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             K_l = self.Wk(K)
             V_l = self.Wv(V)
             sdp_a, att_w = sdp_attention(Q_l, K_l, V_l, mask)
-            att_w = tf.expand_dims(att_w, axis=1)
             multi_head.append(sdp_a)
             att_ws.append(att_w)
         multi_head = tf.concat(multi_head, axis=2)
-        att_ws = tf.concat(att_ws, axis=1)
+        att_ws = tf.stack(att_ws, axis=3)
+        att_ws = tf.einsum('ijkl->iljk', att_ws)
         Y = self.linear(multi_head)
         return Y, att_ws
