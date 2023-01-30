@@ -24,7 +24,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         K = self.Wk(K)
         V = self.Wv(V)
 
-        batch, seq, dm = Q.shape
+        batch, _, _ = Q.shape
 
         # Split logic from this tutorial:
         # https://towardsdatascience.com/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853
@@ -34,11 +34,11 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
             from (batch, seq, emb) to (batch, head, seq, depth).
             """
-            tensor = tf.reshape(tensor, (batch, seq, self.h, self.depth))
+            tensor = tf.reshape(tensor, (batch, -1, self.h, self.depth))
             return tf.transpose(tensor, perm=[0, 2, 1, 3])
         Q, K, V = split(Q), split(K), split(V)
         sdp_a, att_w = sdp_attention(Q, K, V, mask)
         swap = tf.transpose(sdp_a, perm=[0, 2, 1, 3])
-        merged = tf.reshape(swap, (batch, seq, self.depth*self.h))
+        merged = tf.reshape(swap, (batch, -1, self.dm))
         Y = self.linear(merged)
         return Y, att_w
