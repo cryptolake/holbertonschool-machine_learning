@@ -36,7 +36,10 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             """
             tensor = tf.reshape(tensor, (batch, -1, self.h, self.depth))
             return tf.transpose(tensor, perm=[0, 2, 1, 3])
-        Q, K, V = split(Q), split(K), split(V)
+
+        Q = split(Q)
+        K = split(K)
+        V = split(V)
         sdp_a, att_w = sdp_attention(Q, K, V, mask)
         swap = tf.transpose(sdp_a, perm=[0, 2, 1, 3])
         merged = tf.reshape(swap, (batch, -1, self.dm))
