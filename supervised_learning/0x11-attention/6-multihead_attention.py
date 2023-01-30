@@ -9,7 +9,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
     def __init__(self, dm, h):
         """Initialize instance."""
-        super().__init__()
+        super(MultiHeadAttention, self).__init__()
         self.h = h
         self.dm = dm
         self.depth = dm // h
