@@ -21,10 +21,11 @@ class EncoderBlock(tf.keras.layers.Layer):
     def call(self, x, training, mask=None):
         """Functionality of the layer."""
         mha_out, _ = self.mha(x, x, x, mask)
-        norm1 = self.layernorm1(mha_out + x, training=training)
-        y1 = self.dense_hidden(self.dropout1(norm1, training=training),
-                               training=training)
-        y2 = self.dense_output(self.dropout2(y1, training=training),
-                               training=training)
-        norm2 = self.layernorm2(norm1 + y2, training=training)
+        norm1 = self.layernorm1(self.dropout1(mha_out, training=training) + x,
+                                training=training)
+        y1 = self.dense_hidden(norm1, training=training)
+        y2 = self.dense_output(y1, training=training)
+
+        norm2 = self.layernorm2(self.dropout2(y2, training=training) + norm1,
+                                training=training)
         return norm2
