@@ -4,6 +4,7 @@ import tensorflow as tf
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 EncoderBlock = __import__('7-transformer_encoder_block').EncoderBlock
 
+
 class Encoder(tf.keras.layers.Layer):
     """Transformer encoder stack."""
 
@@ -24,7 +25,11 @@ class Encoder(tf.keras.layers.Layer):
 
     def call(self, x, training, mask):
         """Call the layer."""
-        x = self.embedding(x) + self.positional_encoding
+        input_len = x.shape[1]
+        p_e = self.positional_encoding[:input_len]
+        x = self.embedding(x)
+        x = tf.math.sqrt(tf.cast(x, tf.float32))
+        x = x + p_e
         x = self.dropout(x, training=training)
 
         for block in self.blocks:
