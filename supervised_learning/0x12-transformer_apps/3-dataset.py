@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Load and prepare dataset for nlp task."""
-import tensorflow.compat.v2 as tf
+import tensorflow as tf
 import tensorflow_datasets as tfds
 
 
@@ -24,20 +24,20 @@ class Dataset:
         (self.tokenizer_pt,
             self.tokenizer_en) = self.tokenize_dataset(data_train)
 
-        padding = ([None], [None])
-        self.data_train = data_train.map(self.tf_encode)
-        data_train = self.data_train
+        self.data_train_size = ds_info.splits['train'].num_examples
+        self.data_valid_size = ds_info.splits['validation'].num_examples
+
+        padding = ([max_len], [max_len])
+        data_train = data_train.map(self.tf_encode)
         data_train = data_train.filter(filter_ds)
         data_train = data_train.cache()
-        data_train = data_train.shuffle(ds_info.splits['train'].num_examples)
+        data_train = data_train.shuffle(self.data_train_size)
         data_train = data_train.padded_batch(batch_size, padded_shapes=padding)
         self.data_train = data_train.prefetch(tf.data.AUTOTUNE)
 
-        self.data_valid = data_valid.map(self.tf_encode)
-        data_valid = self.data_valid
+        data_valid = data_valid.map(self.tf_encode)
         data_valid = data_valid.filter(filter_ds)
-        data_valid = data_valid.shuffle(
-                    ds_info.splits['validation'].num_examples)
+        data_valid = data_valid.shuffle(self.data_valid_size)
         self.data_valid = data_valid.padded_batch(batch_size,
                                                   padded_shapes=padding)
 
@@ -57,20 +57,15 @@ class Dataset:
 
     def encode(self, pt, en):
         """Encode sentences."""
-        def add_tokens(tokens, size):
-            """Add the START and END tokens."""
-            tokens.insert(0, size)
-            tokens.append(size+1)
-            return tokens
-
         pt_vocab_size = self.tokenizer_pt.vocab_size
         en_vocab_size = self.tokenizer_en.vocab_size
 
-        pt_tokens = self.tokenizer_pt.encode(pt.numpy())
-        en_tokens = self.tokenizer_en.encode(en.numpy())
+        pt_tokens = [pt_vocab_size] +\
+            self.tokenizer_pt.encode(pt.numpy()) + [pt_vocab_size+1]
+        en_tokens = [en_vocab_size] +\
+            self.tokenizer_en.encode(en.numpy()) + [en_vocab_size+1]
 
-        return (add_tokens(pt_tokens, pt_vocab_size),
-                add_tokens(en_tokens, en_vocab_size))
+        return pt_tokens, en_tokens
 
     def tf_encode(self, pt, en):
         """Wrap encode function."""
