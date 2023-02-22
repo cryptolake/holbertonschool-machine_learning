@@ -57,13 +57,13 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
                              Emission[:, Observations[t+1]].T * beta[:, t+1].T)
                 xi[i, :, t] = numerator / denominator
         gamma = np.sum(xi, 1)
-        Transition = np.sum(xi, 2) / np.sum(gamma, 1).reshape((-1, 1))
-        gamma = np.hstack((gamma, np.sum(xi[:, :, T - 2], 0)
-                           .reshape((-1, 1))))
+        Transition = np.sum(xi, 2) / np.reshape(np.sum(gamma, 1), (-1, 1))
+        gamma = np.hstack((gamma, np.reshape(np.sum(xi[:, :, T - 2], 0),
+                                             (-1, 1))))
 
         K = Emission.shape[1]
         denominator = np.sum(gamma, 1)
         for k in range(K):
             Emission[:, k] = np.sum(gamma[:, Observations == k], 1)
-        Emission = np.divide(Emission, denominator.reshape((-1, 1))) 
+        Emission = Emission / np.reshape(denominator, (-1, 1))
     return Transition, Emission
