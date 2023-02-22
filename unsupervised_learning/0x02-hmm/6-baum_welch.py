@@ -6,8 +6,36 @@ The Baum–Welch algorithm is a special case of the expectation–maximization
 algorithm used to find the unknown parameters of a hidden Markov model (HMM).
 """
 import numpy as np
-forward = __import__('3-forward').forward
-backward = __import__('5-backward').backward
+
+
+def forward(Observation, Emission, Transition, Initial):
+    """Perform the forward algorithm."""
+    T = Observation.shape[0]
+    N = Emission.shape[0]
+    F = np.ndarray(shape=(N, T))
+
+    prev = Initial
+    for t in range(T):
+        F[:, t] = Emission[:, Observation[t]] * np.reshape(prev, (N))
+        prev = F[:, t] @ Transition
+    P = np.sum(prev)
+    return P, F
+
+
+def backward(Observation, Emission, Transition, Initial):
+    """Backward algorithm."""
+    T = Observation.shape[0]
+    N = Emission.shape[0]
+    B = np.ndarray(shape=(N, T))
+
+    B[:, -1] = 1.
+    for t in range(T-2, -1, -1):
+        obs = Emission[:, Observation[t+1]]
+        for i in range(N):
+            B[i, t] = np.sum(B[:, t+1] * Transition[i, :] * obs)
+    # TODO: I need to know why Initial[:, 0] here
+    P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * B[:, 0])
+    return P, B
 
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
