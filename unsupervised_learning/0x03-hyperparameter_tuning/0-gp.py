@@ -16,7 +16,7 @@ class GaussianProcess:
 
     def __init__(self, X_init, Y_init, l=1, sigma_f=1):
         """
-        Initialize Gaussian Process
+        Initialize Gaussian Process.
 
         X_init is a numpy.ndarray of shape (t, 1)
         representing the inputs already sampled with the black-box function
@@ -38,7 +38,7 @@ class GaussianProcess:
 
     def kernel(self, X1, X2):
         """
-        Caculate the covariance kernel using RBF (Radial Basis Function)
+        Caculate the covariance kernel using RBF (Radial Basis Function).
 
         Args:
             X1: numpy.ndarray of shape (m, 1)

@@ -12,9 +12,6 @@ def mean_cov(X):
     n, _ = X.shape
     if n < 2:
         raise ValueError("X must contain multiple data points")
-    # another way to do this but checker was annoying on number comparison
-    # covm = np.ndarray(shape=(d, d))
-    # for x in range(d):
-    #     for y in range(d):
-    #         covm[x, y] = np.sum((X[:, x] - mean[x])*(X[:, y] - mean[y]))/n
+    # Dot products measure similarity, and here we are measuring the similiraty
+    # between features.
     return mean, np.matmul((X - mean).T, (X - mean)) / (X.shape[0] - 1)

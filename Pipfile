@@ -6,11 +6,15 @@ name = "pypi"
 [packages]
 opencv-python = "==4.1.2.30"
 ipykernel = "*"
+numpy = "*"
 
 [dev-packages]
 ipykernel = "*"
 autopep8 = "*"
 black = "*"
+pandas = "*"
+flake8 = "*"
+pydocstyle = "*"
 
 [requires]
 python_version = "3.8"
