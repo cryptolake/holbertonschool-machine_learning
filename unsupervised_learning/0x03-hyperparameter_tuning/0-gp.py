@@ -48,6 +48,6 @@ class GaussianProcess:
             Covariance kernel (m, n)
         """
         # (a-b)**2 = a**2 + b**2 - 2ab
-        norm = (X1**2) + (X2**2).T - 2*(X1 @ X2.T)
-        rbf = self.sigma_f**2 * np.exp(-0.5/self.l**2 * norm)
+        norm = (X1**2) + (X2**2).T - 2 * (X1 @ X2.T)
+        rbf = self.sigma_f**2 * np.exp(-0.5 / self.l**2 * norm)
         return rbf
