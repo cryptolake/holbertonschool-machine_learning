@@ -61,11 +61,11 @@ class BayesianOptimization:
         # x_m: scalar
         x_m = np.max(mu)
         # z: (s, 1)
-        sigma_s[sigma_s == 0] = 1
-        imp = mu_s - x_m - self.xsi
-        z = imp / sigma_s
-        EI = imp * norm.cdf(z) + sigma_s * norm.pdf(z)
-        EI[sigma_s == 0] = 0
+        with np.errstate(divide='ignore'):
+            imp = mu_s - x_m - self.xsi
+            z = imp / sigma_s
+            EI = imp * norm.cdf(z) + sigma_s * norm.pdf(z)
+            EI[sigma_s == 0.0] = 0.0
 
         return self.X_s[np.argmax(EI)], EI
 
