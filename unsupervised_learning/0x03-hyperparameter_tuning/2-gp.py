@@ -60,8 +60,8 @@ class GaussianProcess:
             X_s: Points to calculate mu and sigma for, (s,)
 
         Returns:
-            mu: Mean of each data point
-            sigma: standard deviation of each data point
+            mu: Mean of each data point (s,)
+            sigma: standard deviation of each data point (s,)
         """
         k = self.K
         k_s = self.kernel(self.X, X_s)
