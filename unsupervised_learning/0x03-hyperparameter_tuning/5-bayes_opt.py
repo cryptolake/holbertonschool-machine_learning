@@ -72,14 +72,14 @@ class BayesianOptimization:
     def optimize(self, iterations=100):
         """
         Perform Bayesian optimization.
-        
-        Optimize a black box function, we use the acquisition function over 
+
+        Optimize a black box function, we use the acquisition function over
         the bounds to find the next point to sample, then we update update
         our gaussian process with the result and iterate.
 
         Args:
             iteration: number iteration to use in the algorithms
-        
+
         Returns:
             X_opt: Best x for our optimization goal (maximization/minimization)
             Y_opt: f(X_opt)
