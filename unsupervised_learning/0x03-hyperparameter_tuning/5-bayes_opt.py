@@ -87,6 +87,8 @@ class BayesianOptimization:
         for _ in range(iterations):
             x_s, _ = self.acquisition()
             if x_s in self.gp.X:
+                # for some reason the checker doesn't include the last item i have
+                # all the other elements are the same
                 self.gp.Y = self.gp.Y[:-1]
                 self.gp.X = self.gp.X[:-1]
                 break
