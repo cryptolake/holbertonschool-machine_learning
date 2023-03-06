@@ -87,9 +87,12 @@ class BayesianOptimization:
         for _ in range(iterations):
             x_s, _ = self.acquisition()
             if x_s in self.gp.X:
+                self.gp.Y = self.gp.Y[:-1]
+                self.gp.X = self.gp.X[:-1]
                 break
             y_s = self.f(x_s)
             self.gp.update(x_s, y_s)
+        index = np.argmax(self.gp.Y)
         if self.minimize:
-            return self.gp.X[np.argmin(self.gp.Y)], np.min(self.gp.Y).reshape(1)
-        return self.gp.X[np.argmax(self.gp.Y)], np.max(self.gp.Y).reshape(1)
+            index = np.argmin(self.gp.Y)
+        return self.gp.X[index], self.gp.Y[index]
