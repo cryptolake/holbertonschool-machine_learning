@@ -17,16 +17,19 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Model: the autoencoder keras model
     """
     encoder = keras.Sequential(
+        [keras.layers.Input((None, input_dims))] +
         [keras.layers.Dense(x, activation='relu') for x in hidden_layers] +
         [keras.layers.Dense(latent_dims)]
     )
-    decoder = keras.Sequential([
-        keras.layers.Dense(x, activation='relu')
-        for x in reversed(hidden_layers)
-    ] + [keras.layers.Dense(input_dims, activation='sigmoid')])
+    decoder = keras.Sequential(
+        [keras.layers.Input((None, latent_dims))] +
+        [keras.layers.Dense(x, activation='relu')
+         for x in reversed(hidden_layers)] +
+        [keras.layers.Dense(input_dims, activation='sigmoid')])
     auto = keras.Sequential([
+        keras.layers.Input((None, 784)),
         encoder,
         decoder
     ])
-    auto.compile(optimizer='adam', loss=keras.losses.BinaryCrossentropy())
+    auto.compile(optimizer='adam', loss='binary_cross_entropy')
     return encoder, decoder, auto
