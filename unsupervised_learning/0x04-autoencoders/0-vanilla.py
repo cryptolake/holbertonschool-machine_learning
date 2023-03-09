@@ -17,17 +17,17 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Model: the autoencoder keras model
     """
     # encoder = keras.Sequential(
-    #     [keras.Input((None, input_dims))] +
+    #     [keras.Input((input_dims,))] +
     #     [keras.layers.Dense(x, activation='relu') for x in hidden_layers] +
     #     [keras.layers.Dense(latent_dims)]
     # )
     # decoder = keras.Sequential(
-    #     [keras.layers.Input((None, latent_dims))] +
+    #     [keras.layers.Input((latent_dims,))] +
     #     [keras.layers.Dense(x, activation='relu')
     #      for x in reversed(hidden_layers)] +
     #     [keras.layers.Dense(input_dims, activation='sigmoid')])
     # auto = keras.Sequential([
-    #     keras.Input((None, input_dims)),
+    #     keras.Input((input_dims,)),
     #     encoder,
     #     decoder
     # ])
@@ -35,7 +35,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     # Checker won't accept a keras Sequential model
 
     # The encoder
-    X = keras.Input((input_dims))
+    X = keras.Input((input_dims,))
     en = X
     for nl in hidden_layers:
         en = keras.layers.Dense(nl, activation='relu')(en)
@@ -43,7 +43,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     encoder = keras.Model(X, en_final)
 
     # The Decoder
-    de_X = keras.Input((latent_dims))
+    de_X = keras.Input((latent_dims,))
     de = de_X
     for nl in hidden_layers[::-1]:
         de = keras.layers.Dense(nl, activation='relu')(de)
