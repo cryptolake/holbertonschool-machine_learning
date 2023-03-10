@@ -23,7 +23,6 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     en = X
     for nl in hidden_layers:
         en = keras.layers.Dense(nl, activation='relu')(en)
-    en = keras.layers.Dense(latent_dims, activation='relu')(en)
     elogvar = keras.layers.Dense(latent_dims, activation=None)(en)
     emean = keras.layers.Dense(latent_dims, activation=None)(en)
 
@@ -57,6 +56,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     # vae_loss = keras.backend.mean(bce_loss + kl_loss)
 
     # auto.add_loss(vae_loss)
+    # auto.compile(optimizer='adam')
     auto.compile(optimizer='adam', loss='binary_crossentropy')
 
     return encoder, decoder, auto
