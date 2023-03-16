@@ -103,7 +103,6 @@ class EncoderBlock(tf.keras.layers.Layer):
 
 class DecoderBlock(tf.keras.layers.Layer):
     """Transformer decoder block."""
-
     def __init__(self, dm, h, hidden, drop_rate=0.1):
         """Initialize instance."""
         super(DecoderBlock, self).__init__()
