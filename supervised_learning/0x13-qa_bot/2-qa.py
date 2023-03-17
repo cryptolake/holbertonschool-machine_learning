@@ -51,3 +51,22 @@ def question_answer(question, reference):
     answer = tokenizer.convert_tokens_to_string(answer_tokens)
     # answer2 = tokenizer.convert_tokens_to_string(outputs)
     return answer
+
+
+def answer_loop(reference):
+    """
+    Main question/answer loop.
+    """
+    question = ""
+    quit_str = ['exit', 'quit', 'goodbye', 'bye']
+
+    while True:
+        question = input("Q: ")
+        if question.lower() in quit_str:
+            break
+        answer = question_answer(question, reference)
+        if answer is None:
+            answer = "Sorry, I do not understand your question."
+        print("A:", answer)
+
+    print("A: Goodbye")
