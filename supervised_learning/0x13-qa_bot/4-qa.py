@@ -71,7 +71,7 @@ def question_ref(question, reference):
     word_ids = tokenizer.convert_tokens_to_ids(tokens)
     mask = [1] * len(word_ids)
     # we mask the refrence strings with 0 and question string with 1
-    type_ids = [0] * (1 + len(tok_ref) + 1) + [1] * (len(tok_que) + 1)
+    type_ids = [0] * (1 + len(tok_que) + 1) + [1] * (len(tok_ref) + 1)
     word_ids, mask, type_ids = map(lambda t: tf.expand_dims(
         tf.convert_to_tensor(t, dtype=tf.int32), 0),
                                    (word_ids, mask, type_ids))
@@ -79,13 +79,11 @@ def question_ref(question, reference):
     outputs = model([word_ids, mask, type_ids])
     # using `[1:]` will enforce an answer. `outputs[0][0][0]`
     # is the ignored '[CLS]' token logit
-    start_chance = tf.math.reduce_max(tf.nn.softmax(outputs[0][0][1:]))
-    end_chance = tf.math.reduce_max(tf.nn.softmax(outputs[1][0][1:]))
-    if start_chance < .2 or end_chance < .2:
-        return None
 
     short_start = tf.argmax(outputs[0][0][1:]) + 1
     short_end = tf.argmax(outputs[1][0][1:]) + 1
+    if short_start >= short_end:
+        return None
     # print(outputs[0][0][1:][short_start-1], outputs[1][0][1:][short_end-1])
 
     answer_tokens = tokens[short_start: short_end + 1]
