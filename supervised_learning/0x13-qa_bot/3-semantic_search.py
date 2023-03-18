@@ -5,6 +5,7 @@ answer.
 
 We will use FAII to compare embeddings of the document
 with the question asked.
+make sure to do: pip3 install datasets 
 """
 from datasets import load_dataset
 from transformers import AutoTokenizer, TFAutoModel
@@ -16,8 +17,6 @@ def cls_pooling(model_output):
 def semantic_search(corpus_path, sentence):
     """Perform Semantic."""
     corpus = load_dataset("text", data_dir=corpus_path, sample_by="document")['train']
-    # print(corpus['train'])
-    # exit()
 
     # embedding with sentence transformers
     model_ckpt = "sentence-transformers/multi-qa-MiniLM-L6-dot-v1"
