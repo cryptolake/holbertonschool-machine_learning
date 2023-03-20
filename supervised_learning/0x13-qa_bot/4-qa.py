@@ -82,7 +82,7 @@ def question_ref(question, reference):
 
     short_start = tf.argmax(outputs[0][0][1:]) + 1
     short_end = tf.argmax(outputs[1][0][1:]) + 1
-    if short_start >= short_end:
+    if short_start <= len(tok_que) or short_start >= short_end:
         return None
     # print(outputs[0][0][1:][short_start-1], outputs[1][0][1:][short_end-1])
 
