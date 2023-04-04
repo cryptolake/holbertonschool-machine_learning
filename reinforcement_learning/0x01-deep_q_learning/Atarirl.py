@@ -139,7 +139,7 @@ class AtariRL:
 
                     # Build the updated Q-values for the sampled future states
                     # Use the target model for stability
-                    future_rewards = self.target_model.predict(sample['next_states'])
+                    future_rewards = self.target_model(sample['next_states'], training=False)
 
                     # Q value = reward + discount factor * expected future reward
                     updated_q_values = sample['rewards'] + gamma * tf.reduce_max(future_rewards, axis=1)
