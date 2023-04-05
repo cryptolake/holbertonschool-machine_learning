@@ -192,7 +192,8 @@ class AtariRL:
             state = tf.expand_dims(state, 0)
             i = 0
             while not done and i < max_steps:
-                action = tf.argmax(self.model.predict(state)).numpy()[0]
+                pred = self.model.predict(state)
+                action = tf.argmax(pred, 1).numpy()[0]
                 state_next, _, done, _, _ = self.env.step(action)
                 state = tf.expand_dims(state_next, 0)
                 i+=1
