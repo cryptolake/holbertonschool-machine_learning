@@ -8,7 +8,8 @@ from Atarirl import AtariRL, EpsilonGreedy
 
 
 if __name__ == '__main__':
-    policy = EpsilonGreedy()
-    dqn = AtariRL('Breakout-v4', policy=policy.explore)
+    policy = EpsilonGreedy(epsilon_greedy_frames=1000000.0)
+    dqn = AtariRL('Breakout-v4', policy=policy.explore,
+                  max_memory_length=80000)
     dqn.train()
     dqn.save()

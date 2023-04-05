@@ -83,7 +83,7 @@ class AtariRL:
         x4 = layers.Conv2D(64, 3, strides=1, activation='relu')(x3)
         x5 = layers.Flatten()(x4)
         x6 = layers.Dense(512, activation='relu')(x5)
-        y = layers.Dense(self.na)(x6)
+        y = layers.Dense(self.na, activation='linear')(x6)
         return models.Model(inputs=inp, outputs=y)
 
     def __add_to_memory(self, dq_tuple):
@@ -189,13 +189,13 @@ class AtariRL:
         for _ in range(nb_episodes):
             done = False
             state, _ = self.env.reset()
-            state = tf.expand_dims(state, 0)
             i = 0
             while not done and i < max_steps:
+                state = tf.expand_dims(state, 0)
                 pred = self.model.predict(state)
                 action = tf.argmax(pred, 1).numpy()[0]
                 state_next, _, done, _, _ = self.env.step(action)
-                state = tf.expand_dims(state_next, 0)
+                state = state_next
                 i+=1
 
 
