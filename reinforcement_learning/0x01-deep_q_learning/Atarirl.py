@@ -69,6 +69,7 @@ class AtariRL:
         self.target_model = self.__create_model()
         self.batch_size = batch_size
         self.max_memory_length = max_memory_length
+        self.frame_count = 0
 
 
     def __create_model(self):
@@ -103,11 +104,11 @@ class AtariRL:
         return sample
 
     def train(self, max_steps=10000, lr=0.00025, update_after=4,
-              update_target=10000, gamma=0.99):
+              update_target=10000, gamma=0.99, reward_threshold=40,
+              episode_memory_size=100, checkpoint=1000000):
         """Training loop."""
         self.optimizer = optimizers.Adam(learning_rate=lr, clipnorm=1.0)
         self.loss = losses.Huber()
-        frame_count = 0
         episode_history = []
         while True:
             state, _ = self.env.reset()
@@ -115,8 +116,8 @@ class AtariRL:
             done = False
             episode_reward = 0
             for _ in range(max_steps):
-                frame_count += 1
-                if self.policy(frame_count):
+                self.frame_count += 1
+                if self.policy(self.frame_count):
                     action = np.random.choice(self.na)
                 else:
                     state_tensor = tf.convert_to_tensor(state)
@@ -133,7 +134,7 @@ class AtariRL:
 
                 episode_reward += reward
 
-                if frame_count % update_after == 0 and len(self.memory['states']) > self.batch_size:
+                if self.frame_count % update_after == 0 and len(self.memory['states']) > self.batch_size:
 
                     sample = self.__random_memory_sample()
 
@@ -160,21 +161,25 @@ class AtariRL:
                     grads = tape.gradient(loss, self.model.trainable_variables)
                     self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
 
-                    if frame_count % update_target == 0:
+                    if self.frame_count % update_target == 0:
                         self.target_model.set_weights(self.model.get_weights())
+
+                    if checkpoint != None:
+                        if self.frame_count % checkpoint:
+                            self.save(f"{self.frame_count}-checkpoint.h5")
                 
                 state = state_next
 
                 if done:
-                    print(f"{frame_count} frames done")
+                    print(f"{self.frame_count} frames done")
                     break
 
             episode_history.append(episode_reward)
-            if len(episode_history) > 100:
+            if len(episode_history) > episode_memory_size:
                 del episode_history[:1]
             running_reward = np.mean(episode_history)
 
-            if running_reward > 40:
+            if running_reward > reward_threshold:
                 break
             gc.collect()
             K.backend.clear_session()
@@ -199,10 +204,10 @@ class AtariRL:
                 i+=1
 
 
-    def save(self, filename="Breakout_weights.h5"):
+    def save(self, weights="Breakout_weights.h5"):
         """Save DQN model weights."""
-        self.model.save_weights(filename)
+        self.model.save_weights(weights)
 
-    def load(self, filename="Breakout_weights.h5"):
+    def load(self, weights="Breakout_weights.h5"):
         """Load DQN from weights file."""
-        self.model.load_weights(filename)
+        self.model.load_weights(weights)
