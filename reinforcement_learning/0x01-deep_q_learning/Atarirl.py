@@ -105,16 +105,18 @@ class AtariRL:
 
     def train(self, max_steps=10000, lr=0.00025, update_after=4,
               update_target=10000, gamma=0.99, reward_threshold=40,
-              episode_memory_size=100, checkpoint=1000000):
+              episode_memory_size=100, checkpoint=100, log=True):
         """Training loop."""
         self.optimizer = optimizers.Adam(learning_rate=lr, clipnorm=1.0)
         self.loss = losses.Huber()
         episode_history = []
+        ep = 0
         while True:
             state, _ = self.env.reset()
             state = np.array(state, dtype=np.float32)
             done = False
             episode_reward = 0
+            ep += 1
             for _ in range(max_steps):
                 self.frame_count += 1
                 if self.policy(self.frame_count):
@@ -164,16 +166,16 @@ class AtariRL:
                     if self.frame_count % update_target == 0:
                         self.target_model.set_weights(self.model.get_weights())
 
-                    if checkpoint != None:
-                        if self.frame_count % checkpoint:
-                            self.save(f"{self.frame_count}-checkpoint.h5")
-                
                 state = state_next
 
                 if done:
-                    print(f"{self.frame_count} frames done")
                     break
 
+            if log:
+                print(f"Episode: {ep}, Frames done: {self.frame_count}, Episode reward: {episode_reward}")
+            if checkpoint != None:
+                if (ep % checkpoint) == 0:
+                    self.save(f"{self.frame_count}-checkpoint.h5")
             episode_history.append(episode_reward)
             if len(episode_history) > episode_memory_size:
                 del episode_history[:1]
