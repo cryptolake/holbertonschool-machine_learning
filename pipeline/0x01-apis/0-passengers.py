@@ -12,5 +12,5 @@ def availableShips(passengerCount):
         starships_request = requests.get(next).json()
         starships.extend(starships_request['results'].copy())
         next = starships_request.get('next')
-    available_starships = filter(lambda x: x['passengers'].isdigit() and int(x['passengers'].replace(',', '')) >= passengerCount, starships)
+    available_starships = filter(lambda x: x['passengers'].replace(',', '').isdigit() and int(x['passengers'].replace(',', '')) >= passengerCount, starships)
     return list(map(lambda x: x['name'], available_starships))
