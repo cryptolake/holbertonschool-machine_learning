@@ -5,7 +5,9 @@ import requests
 
 def upcoming_launch():
     """Get Upcoming SpaceX launch."""
-    launches = requests.get('https://api.spacexdata.com/latest/launches').json()
+    launches = requests.get('https://api.spacexdata.com/latest/launches')\
+        .json()
+
     latest = sorted(launches, key=lambda x: x['date_unix'], reverse=True)[0]
 
     rocket = requests.get('https://api.spacexdata.com/latest/rockets/{}'
@@ -15,7 +17,9 @@ def upcoming_launch():
                              .format(latest['launchpad'])).json()
 
     print("{} ({}) {} - {} ({})".format(latest['name'], latest['date_local'],
-                                        rocket['name'],launchpad['name'],
+                                        rocket['name'], launchpad['name'],
                                         launchpad['locality']))
+
+
 if __name__ == "__main__":
     upcoming_launch()
