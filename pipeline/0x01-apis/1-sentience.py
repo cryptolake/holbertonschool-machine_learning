@@ -17,6 +17,8 @@ def sentientPlanets():
         planet = requests.get(species['homeworld']).json()
         return planet['name']
 
-    sentient_species = filter(lambda x: x['designation'] == 'sentient'
+    sentient_species = filter(lambda x: (x['designation'] == 'sentient' or
+                              x['classification'] == 'sentient')
                               and x['homeworld'] is not None, species)
+
     return list(map(get_planet, sentient_species))
