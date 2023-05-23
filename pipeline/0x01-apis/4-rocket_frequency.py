@@ -20,7 +20,8 @@ def rocket_freq():
                               key=lambda x: x[1][1], reverse=True))
 
     for rocket in rocket_dict.values():
-        print("{}: {}".format(rocket[0], rocket[1]))
+        if rocket[1] > 0:
+            print("{}: {}".format(rocket[0], rocket[1]))
 
 
 if __name__ == "__main__":
