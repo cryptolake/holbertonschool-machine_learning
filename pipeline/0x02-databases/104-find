@@ -1,0 +1,3 @@
+// Regex filter mongo
+
+db.school.find({name: {$regex: "Holberton.*"}})
